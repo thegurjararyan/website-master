@@ -1,0 +1,29 @@
+.news-carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.news-cards-container {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.news-card {
+    flex: 0 0 100%;
+    width: 100%;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.left-arrow { left: 10px; }
+.right-arrow { right: 10px; }

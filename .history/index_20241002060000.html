@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gurjar Art and Cultural Trust 🎨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(79, 70, 229, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        .menu-button:hover {
+            background: rgba(59, 58, 154, 0.9);
+            transform: scale(1.1);
+        }
+        .full-screen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.9) 0%, rgba(59, 58, 154, 0.9) 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 99;
+        }
+        .full-screen-menu.active {
+            transform: translateY(0);
+        }
+        .full-screen-menu a {
+            font-size: 2rem;
+            margin: 15px 0;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .full-screen-menu a:hover,
+        .full-screen-menu a.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+        .full-screen-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: #ffd700;
+            transition: all 0.3s;
+        }
+        .full-screen-menu a:hover::after,
+        .full-screen-menu a.active::after {
+            width: 100%;
+            left: 0;
+        }
+        .section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+        .section h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background: linear-gradient(90deg, transparent, #4f46e5, transparent);
+        }
+        .section p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section-1 { background: #f8f8f8; }
+        .section-2 { background: #f0f0f0; }
+        .section-3 { background: #e8e8e8; }
+        .section-4 { background: #e0e0e0; }
+        .section-5 { background: #d8d8d8; }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(79, 70, 229, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        .back-to-top:hover {
+            background: rgba(59, 58, 154, 0.9);
+            transform: scale(1.1);
+        }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        /* Continuous Sliding Gallery styles */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background: #f0f0f0;
+            padding: 20px 0;
+        }
+        .gallery-track {
+            display: flex;
+            width: calc(250px * 14); /* 250px per image * 2 sets of images */
+            animation: scroll 40s linear infinite;
+        }
+        .gallery-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 7)); } /* 7 images */
+        }
+        .gallery-item {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 10px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .view-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .view-image-overlay {
+            opacity: 1;
+        }
+        .view-image-text {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover .view-image-text {
+            transform: translateY(0);
+        }
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #f0f0f0, transparent 10%, transparent 90%, #f0f0f0);
+            pointer-events: none;
+        }
+        .fullview-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .fullview-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .fullview-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .fullview-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .fullview-close:hover {
+            transform: scale(1.1);
+        }
+
+        /* New Events Section Styles */
+        .events-section {
+            position: relative;
+            padding: 80px 20px;
+            background: #fff;
+        }
+        .events-section h2 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            color: #4f46e5;
+            position: relative;
+        }
+        .events-section h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            background: #ffd700;
+            bottom: -10px;
+            left: 20%;
+            border-radius: 2px;
+        }
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+        /* Central vertical line */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #4f46e5;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+        /* Timeline items */
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        /* Left timeline items */
+        .timeline-item.left {
+            left: 0;
+        }
+        /* Right timeline items */
+        .timeline-item.right {
+            left: 50%;
+        }
+        /* Content within timeline items */
+        .timeline-item .content {
+            padding: 20px 30px;
+            background-color: #f0f0f0;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .timeline-item .content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+        }
+        /* Arrow indicators */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+        /* Left timeline arrows */
+        .timeline-item.left::after {
+            right: -20px;
+            border-left-color: #f0f0f0;
+        }
+        /* Right timeline arrows */
+        .timeline-item.right::after {
+            left: -20px;
+            border-right-color: #f0f0f0;
+        }
+        /* Icons for events */
+        .timeline-item .icon {
+            position: absolute;
+            top: 15px;
+            width: 30px;
+            height: 30px;
+            background-color: #4f46e5;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .timeline-item.left .icon {
+            right: -45px;
+        }
+        .timeline-item.right .icon {
+            left: -45px;
+        }
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-item.right {
+                left: 0%;
+            }
+            .timeline-item::after {
+                left: 60px;
+                border: none;
+                border-bottom-color: #f0f0f0;
+                border-top-color: transparent;
+                border-left-color: transparent;
+                border-right-color: transparent;
+                top: 25px;
+                transform: rotate(45deg);
+            }
+            .timeline-item.left::after,
+            .timeline-item.right::after {
+                left: 20px;
+                border: 10px solid transparent;
+                border-top-color: #f0f0f0;
+                top: 20px;
+                transform: rotate(45deg);
+            }
+            .timeline-item .icon {
+                left: -15px;
+            }
+        }
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1001;
+        }
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            animation: fadeIn 0.5s ease;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+        .modal-close:hover {
+            color: #4f46e5;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .stats-container {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .stat-item {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .stat-info {
+        flex: 1;
+        text-align: right;
+        padding-right: 2rem;
+    }
+
+    .stat-label {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .stat-bar-container {
+        width: 60%;
+        height: 30px;
+        background-color: #e0e0e0;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .stat-bar {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #4f46e5, #7c3aed);
+        border-radius: 15px;
+        transition: width 2s ease-out;
+    }
+
+    .stat-icon {
+        position: absolute;
+        right: -50px;
+        font-size: 2.5rem;
+        color: #4f46e5;
+        background-color: #f3f4f6;
+        border-radius: 50%;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .stat-item {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stat-info {
+            text-align: center;
+            padding-right: 0;
+        }
+
+        .stat-bar-container {
+            width: 100%;
+        }
+
+        .stat-icon {
+            position: static;
+            margin-top: 1rem;
+        }
+    }
+
+        /* New Navigation Styles */
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-button .bar {
+            display: block;
+            width: 30px;
+            height: 3px;
+            margin: 6px auto;
+            background-color: #fff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-button.active .bar:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-button.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.active .bar:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .full-screen-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(79, 70, 229, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease-in-out;
+            z-index: 1000;
+        }
+
+        .full-screen-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-items {
+            text-align: center;
+        }
+
+        .menu-item {
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .full-screen-menu.active .menu-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-item a {
+            font-size: 4rem;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-item a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #fff;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        .menu-item a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Improved Scroll-to-Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(79, 70, 229, 0.9);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background: rgba(59, 58, 154, 1);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-item a {
+                font-size: 2.5rem;
+            }
+        }
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+            }
+
+            .nav-link {
+                padding: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- New Navigation Menu Button -->
+    <button class="menu-button" id="menuButton" onclick="toggleMenu()">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+
+    <!-- Full Screen Menu -->
+    <nav class="full-screen-menu" id="fullScreenMenu">
+        <div class="menu-items">
+            <div class="menu-item"><a href="#home">Home</a></div>
+            <div class="menu-item"><a href="#about">About</a></div>
+            <div class="menu-item"><a href="#events">Events</a></div>
+            <div class="menu-item"><a href="#gallery">Gallery</a></div>
+            <div class="menu-item"><a href="#contact">Contact</a></div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="relative h-screen flex items-center justify-center parallax" style="background-image: url('/api/placeholder/1920/1080');">
+            <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0">
+                <source src="https://github.com/Aryansin1234/ImageVideo/raw/refs/heads/main/3130376-uhd_2560_1440_24fps.mp4" type="video/mp4">
+            </video>
+            <div class="relative z-10 text-center fade-in" id="intro-section">
+                <h1 class="text-4xl md:text-6xl lg:text-8xl font-bold text-white mb-4 shadow-text font-playfair">Gurjar Art and Cultural Trust</h1>
+                <p class="text-xl md:text-2xl lg:text-3xl text-white mb-8 shadow-text">Preserving and Promoting Gurjar Heritage</p>
+                <a href="#about" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-full transition duration-300 ease-in-out transform hover:scale-105 text-lg md:text-xl">
+                    Discover More
+                </a>
+            </div>
+        </section>
+
+        <section id="about" class="section section-2 relative overflow-hidden py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-center">About Us 📚</h2>
+                <p class="text-base md:text-lg lg:text-xl mb-16 max-w-3xl mx-auto text-center">Dive into the rich tapestry of Gurjar culture and heritage. Our trust is dedicated to preserving and promoting the artistic traditions that have been passed down through generations.</p>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <div class="stat-label">People Connected</div>
+                            <div class="stat-value" id="peopleConnected">0</div>
+                        </div>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" id="peopleConnectedBar"></div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <div class="stat-label">Indian States Joined</div>
+                            <div class="stat-value" id="statesJoined">0</div>
+                        </div>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" id="statesJoinedBar"></div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="events" class="events-section">
+            <h2>Our Events 🎉</h2>
+            <p class="text-base md:text-lg lg:text-xl mb-12 max-w-3xl mx-auto">Embark on a journey through time and culture with our extraordinary events. Each experience is crafted to immerse you in the vibrant world of Gurjar heritage.</p>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="icon">🎨</div>
+                    <div class="content">
+                        <h3>Colours of Gurjar Heritage</h3>
+                        <p>A mesmerizing art exhibition featuring traditional and contemporary Gurjar artworks. Witness the evolution of our artistic legacy through vivid canvases and intricate sculptures.</p>
+                        <span class="text-sm text-gray-600">May 15-20, 2024</span>
+                        <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded" onclick="openModal('Colours of Gurjar Heritage', 'Detailed information about Colours of Gurjar Heritage.')">Learn More</button>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="icon">🎭</div>
+                    <div class="content">
+                        <h3>Echoes of Ancients: Theatre Festival</h3>
+                        <p>Experience the magic of Gurjar folklore through captivating theatrical performances. From epic tales to heartwarming stories, our stage comes alive with the spirit of our ancestors.</p>
+                        <span class="text-sm text-gray-600">July 1-5, 2024</span>
+                        <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded" onclick="openModal('Echoes of Ancients: Theatre Festival', 'Detailed information about Echoes of Ancients: Theatre Festival.')">Learn More</button>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="icon">🍲</div>
+                    <div class="content">
+                        <h3>Flavors of the Land: Culinary Extravaganza</h3>
+                        <p>Savor the rich tastes of Gurjar cuisine in this week-long food festival. Master chefs and home cooks come together to serve traditional delicacies and modern fusion dishes.</p>
+                        <span class="text-sm text-gray-600">September 10-17, 2024</span>
+                        <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded" onclick="openModal('Flavors of the Land: Culinary Extravaganza', 'Detailed information about Flavors of the Land: Culinary Extravaganza.')">Learn More</button>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="icon">💃</div>
+                    <div class="content">
+                        <h3>Rhythms of the Heart: Dance Spectacular</h3>
+                        <p>Witness the grace and vigor of Gurjar dance forms in this breathtaking showcase. From classical movements to folk expressions, feel the pulse of our cultural rhythm.</p>
+                        <span class="text-sm text-gray-600">November 22-24, 2024</span>
+                        <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded" onclick="openModal('Rhythms of the Heart: Dance Spectacular', 'Detailed information about Rhythms of the Heart: Dance Spectacular.')">Learn More</button>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="icon">🏺</div>
+                    <div class="content">
+                        <h3>Artisan's Bazaar: Craft and Heritage Market</h3>
+                        <p>Explore a vibrant marketplace showcasing the finest Gurjar crafts. Meet skilled artisans, participate in workshops, and take home a piece of our living heritage.</p>
+                        <span class="text-sm text-gray-600">January 5-10, 2025</span>
+                        <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded" onclick="openModal('Artisan\'s Bazaar: Craft and Heritage Market', 'Detailed information about Artisan\'s Bazaar: Craft and Heritage Market.')">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="section section-4">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8">Our Gallery 🖼️</h2>
+            <p class="text-base md:text-lg lg:text-xl mb-12 max-w-3xl mx-auto">Immerse yourself in the visual splendor of Gurjar art and culture. Our gallery showcases a stunning collection of images that capture the essence of our rich heritage.</p>
+            <div class="gallery-container">
+                <div class="gallery-track">
+                    <!-- First set of images -->
+                    <div class="gallery-item">
+                        <img src="https://t3.ftcdn.net/jpg/08/35/63/10/360_F_835631071_yjkfOL5JK12n6OH97gSR9j5fW3KIITAG.jpg" alt="Gurjar Art 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455_640.jpg" alt="Gurjar Culture 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://img.freepik.com/free-photo/green-background_1048-3128.jpg" alt="Gurjar Heritage 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://shotkit.com/wp-content/uploads/2021/01/nature-photography.jpg" alt="Gurjar Festival 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://expertphotography.b-cdn.net/wp-content/uploads/2018/07/nature-photography.jpg" alt="Gurjar Tradition 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://render.fineartamerica.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/valley-of-gods-john-mueller.jpg" alt="Gurjar Craft 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <!-- Duplicate set of images for seamless loop -->
+                    <div class="gallery-item">
+                        <img src="https://t3.ftcdn.net/jpg/08/35/63/10/360_F_835631071_yjkfOL5JK12n6OH97gSR9j5fW3KIITAG.jpg" alt="Gurjar Art 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455_640.jpg" alt="Gurjar Culture 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://img.freepik.com/free-photo/green-background_1048-3128.jpg" alt="Gurjar Heritage 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://shotkit.com/wp-content/uploads/2021/01/nature-photography.jpg" alt="Gurjar Festival 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://expertphotography.b-cdn.net/wp-content/uploads/2018/07/nature-photography.jpg" alt="Gurjar Tradition 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://render.fineartamerica.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/valley-of-gods-john-mueller.jpg" alt="Gurjar Craft 1">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">View Image</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-overlay"></div>
+            </div>
+        </section>
+
+        <div class="fullview-overlay" id="fullviewOverlay">
+            <img src="" alt="Full View Image" class="fullview-image" id="fullviewImage">
+            <div class="fullview-close" onclick="closeFullview()">×</div>
+        </div>
+
+        <section id="contact" class="section section-5">
+            <h2>Contact Us 📞</h2>
+            <p class="text-base md:text-lg lg:text-xl">We'd love to hear from you! Whether you have questions about our events, want to support our mission, or simply want to learn more about Gurjar art and culture, we're here to connect.</p>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Gurjar Art and Cultural Trust. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- Improved Scroll-to-Top Button -->
+    <div class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Modal for Event Details -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Event Title</h3>
+            <p id="modalDescription">Event Description</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle full-screen menu
+        function toggleMenu() {
+            const menu = document.getElementById('fullScreenMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Highlight active section in navbar
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        function highlightNavLink() {
+            let scrollY = window.pageYOffset;
+
+            sections.forEach(section => {
+                const sectionHeight = section.offsetHeight;
+                const sectionTop = section.offsetTop - 100;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', highlightNavLink);
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.section').forEach((section, i) => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: 'top 80%',
+                end: 'bottom 20%',
+                onEnter: () => {
+                    gsap.to(section, { 
+                        duration: 1, 
+                        opacity: 1, 
+                        y: 0, 
+                        ease: 'power3.out'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(section, { 
+                        duration: 1, 
+                        opacity: 0, 
+                        y: 50, 
+                        ease: 'power3.out'
+                    });
+                }
+            });
+        });
+
+        // Ripple effect
+        const introSection = document.getElementById('intro-section');
+        introSection.addEventListener('mousemove', function(e) {
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = `${e.clientX - introSection.offsetLeft}px`;
+            ripple.style.top = `${e.clientY - introSection.offsetTop}px`;
+            introSection.appendChild(ripple);
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        // Scroll-Triggered Gallery Animation
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        function checkGallery() {
+            const triggerBottom = window.innerHeight * 0.8;
+
+            galleryItems.forEach(item => {
+                const itemTop = item.getBoundingClientRect().top;
+
+                if (itemTop < triggerBottom) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkGallery);
+        window.addEventListener('resize', checkGallery);
+        checkGallery(); // Initial check
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                toggleMenu();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Updated Gallery full view functionality
+        const fullviewOverlay = document.getElementById('fullviewOverlay');
+        const fullviewImage = document.getElementById('fullviewImage');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const imgSrc = this.querySelector('img').src;
+                fullviewImage.src = imgSrc;
+                fullviewOverlay.classList.add('active');
+            });
+        });
+
+        function closeFullview() {
+            fullviewOverlay.classList.remove('active');
+        }
+
+        // Close fullview when clicking outside the image
+        fullviewOverlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFullview();
+            }
+        });
+
+        // GSAP Animations for Enhanced Events Timeline
+        const timelineItems = document.querySelectorAll('.timeline-item');
+
+        timelineItems.forEach((item, index) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reset'
+                },
+                opacity: 0,
+                x: index % 2 === 0 ? -200 : 200,
+                duration: 1.2,
+                ease: 'power3.out'
+            });
+
+            // Add staggered animation for content
+            gsap.from(item.querySelector('.content'), {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                delay: 0.3,
+                ease: 'power3.out'
+            });
+        });
+
+        // Modal Functionality
+        const eventModal = document.getElementById('eventModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+
+        function openModal(title, description) {
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            eventModal.classList.add('active');
+        }
+
+        function closeModal() {
+            eventModal.classList.remove('active');
+        }
+
+        // Close modal when clicking outside the content
+        eventModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Optional: Close modal with Esc key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+
+function animateNumber(element, start, end, duration, postfix = '') {
+    let current = start;
+    const range = end - start;
+    const increment = end > start ? 1 : -1;
+    const stepTime = Math.abs(Math.floor(duration / range));
+    const timer = setInterval(() => {
+        current += increment;
+        element.textContent = current.toLocaleString() + postfix;
+        if (current == end) {
+            clearInterval(timer);
+        }
+    }, stepTime);
+}
+
+function animateBar(element, targetWidth) {
+    gsap.to(element, {
+        width: targetWidth + '%',
+        duration: 2,
+        ease: 'power2.out'
+    });
+}
+
+ScrollTrigger.create({
+    trigger: ".stats-container",
+    start: "top 80%",
+    onEnter: () => {
+        animateNumber(document.getElementById('peopleConnected'), 0, 18, 2000, ' Crore');
+        animateNumber(document.getElementById('statesJoined'), 0, 13, 1500);
+        animateBar(document.getElementById('peopleConnectedBar'), 100);
+        animateBar(document.getElementById('statesJoinedBar'), (13 / 29) * 100); // Assuming 29 states in India
+    },
+    once: true
+});
+
+gsap.from(".stat-item", {
+    scrollTrigger: {
+        trigger: ".stats-container",
+        start: "top 80%",
+    },
+    y: 50,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.3,
+    ease: "power3.out"
+});
+
+        // Toggle menu function
+        function toggleMenu() {
+            const menuButton = document.getElementById('menuButton');
+            const fullScreenMenu = document.getElementById('fullScreenMenu');
+            menuButton.classList.toggle('active');
+            fullScreenMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        }
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('.menu-item a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                toggleMenu(); // Close the menu
+                
+                // Scroll to the target section after a short delay
+                setTimeout(() => {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            });
+        });
+
+        // Show/hide scroll-to-top button
+        window.addEventListener('scroll', function() {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add animation delay to menu items
+        document.querySelectorAll('.menu-item').forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.1}s`;
+        });
+        
+    </script>
+</body>
+</html>

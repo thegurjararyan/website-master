@@ -1,0 +1,124 @@
+.events-section {
+    padding: 80px 20px;
+    background: #fff;
+}
+
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--primary-color);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+}
+
+.timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+    opacity: 1; /* Ensure visibility */
+    transform: translateY(0); /* Ensure visibility */
+    transition: all 0.5s ease;
+}
+
+.timeline-item.left {
+    left: 0;
+}
+
+.timeline-item.right {
+    left: 50%;
+}
+
+.timeline-item .content {
+    padding: 20px 30px;
+    background-color: #f0f0f0;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+}
+
+.timeline-item.left::after {
+    right: -20px;
+    border-left-color: #f0f0f0;
+}
+
+.timeline-item.right::after {
+    left: -20px;
+    border-right-color: #f0f0f0;
+}
+
+.timeline-item .icon {
+    position: absolute;
+    top: 15px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.timeline-item.left .icon {
+    right: -45px;
+}
+
+.timeline-item.right .icon {
+    left: -45px;
+}
+
+@media screen and (max-width: 768px) {
+    .timeline::after {
+        left: 31px;
+    }
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+    .timeline-item.right {
+        left: 0%;
+    }
+    .timeline-item::after {
+        left: 60px;
+        border: none;
+        border-bottom-color: #f0f0f0;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        top: 25px;
+        transform: rotate(45deg);
+    }
+    .timeline-item.left::after,
+    .timeline-item.right::after {
+        left: 20px;
+        border: 10px solid transparent;
+        border-top-color: #f0f0f0;
+        top: 20px;
+        transform: rotate(45deg);
+    }
+    .timeline-item .icon {
+        left: -15px;
+    }
+}

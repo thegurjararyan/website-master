@@ -1,0 +1,233 @@
+/* components/navigation/navigation.css */
+:root {
+  --primary-color: #FF6B6B;
+  --secondary-color: #4ECDC4;
+  --text-color: #FFFFFF;
+  --menu-bg: rgba(255, 107, 107, 0.95);
+  --menu-text: #FFFFFF;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1rem 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-color);
+  margin-right: 1rem;
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+}
+
+.donate-btn {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 6px rgba(255, 107, 107, 0.2);
+}
+
+.donate-btn:hover {
+  background-color: darken(var(--primary-color), 10%);
+  box-shadow: 0 6px 8px rgba(255, 107, 107, 0.3);
+}
+
+.hamburger-menu {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(255, 107, 107, 0.2);
+}
+
+.hamburger-box {
+  width: 24px;
+  height: 20px;
+  position: relative;
+}
+
+.hamburger-inner {
+  width: 24px;
+  height: 2px;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+}
+
+.hamburger-inner::before,
+.hamburger-inner::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: white;
+  left: 0;
+  transition: all 0.3s ease;
+}
+
+.hamburger-inner::before {
+  top: -7px;
+}
+
+.hamburger-inner::after {
+  bottom: -7px;
+}
+
+.hamburger-menu.active .hamburger-inner {
+  background-color: transparent;
+}
+
+.hamburger-menu.active .hamburger-inner::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.hamburger-menu.active .hamburger-inner::after {
+  bottom: 0;
+  transform: rotate(-45deg);
+}
+
+.full-screen-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--menu-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
+}
+
+.full-screen-menu.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menu-content {
+  text-align: center;
+}
+
+.menu-items {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.menu-items li {
+  margin: 1.5rem 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.full-screen-menu.active .menu-items li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-items a {
+  font-size: 2.5rem;
+  color: var(--menu-text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menu-items a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--menu-text);
+  transition: all 0.3s ease;
+}
+
+.menu-items a:hover::after {
+  width: 100%;
+}
+
+.menu-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icon {
+  color: var(--menu-text);
+  font-size: 1.5rem;
+  margin: 0 1rem;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.2);
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .nav-button:not(.donate-btn) {
+    display: none;
+  }
+
+  .menu-items a {
+    font-size: 2rem;
+  }
+}

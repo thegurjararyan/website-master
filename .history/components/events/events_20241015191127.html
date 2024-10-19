@@ -1,0 +1,34 @@
+<!-- components/events/events.html -->
+<section id="events" class="events-section">
+    <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8">Our Events 🎉</h2>
+    <p class="text-base md:text-lg lg:text-xl mb-12 max-w-3xl mx-auto">Embark on a journey through time and culture with our extraordinary events. Each experience is crafted to immerse you in the vibrant world of Gurjar heritage.</p>
+    <div class="timeline">
+        <div class="timeline-item left">
+            <div class="icon">🎨</div>
+            <div class="content">
+                <h3>Colours of Gurjar Heritage</h3>
+                <p>A mesmerizing art exhibition featuring traditional and contemporary Gurjar artworks.</p>
+                <span class="text-sm text-gray-600">May 15-20, 2024</span>
+                <button class="mt-4 bg-primary-color text-white px-4 py-2 rounded" onclick="openModal('Colours of Gurjar Heritage', 'A mesmerizing art exhibition featuring traditional and contemporary Gurjar artworks. Witness the evolution of our artistic legacy through vivid canvases and intricate sculptures.')">Learn More</button>
+            </div>
+        </div>
+        <div class="timeline-item right">
+            <div class="icon">🎭</div>
+            <div class="content">
+                <h3>Echoes of Ancients: Theatre Festival</h3>
+                <p>Experience the magic of Gurjar folklore through captivating theatrical performances.</p>
+                <span class="text-sm text-gray-600">July 1-5, 2024</span>
+                <button class="mt-4 bg-primary-color text-white px-4 py-2 rounded" onclick="openModal('Echoes of Ancients: Theatre Festival', 'Experience the magic of Gurjar folklore through captivating theatrical performances. From epic tales to heartwarming stories, our stage comes alive with the spirit of our ancestors.')">Learn More</button>
+            </div>
+        </div>
+        <!-- Add more timeline items as needed -->
+    </div>
+</section>
+
+<div class="modal" id="eventModal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle">Event Title</h3>
+        <p id="modalDescription">Event Description</p>
+    </div>
+</div>

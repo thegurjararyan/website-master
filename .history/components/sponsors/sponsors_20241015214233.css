@@ -1,0 +1,26 @@
+/* components/sponsors/sponsors.css */
+.sponsors-container {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.sponsors-track {
+    width: 200%; /* Double the width to accommodate the repeated set of logos */
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-scroll {
+    animation: scroll 30s linear infinite;
+}
+
+.sponsors-track:hover {
+    animation-play-state: paused;
+}

@@ -1,0 +1,38 @@
+<section id="events" class="py-20 bg-gradient-to-b from-gray-100 to-white overflow-hidden">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-primary-color">Our Journey</h2>
+        
+        <div class="timeline relative">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-event left" data-event-url="/event1">
+                <div class="timeline-content">
+                    <div class="event-date">2020</div>
+                    <h3 class="event-title">Foundation</h3>
+                    <p class="event-description">Gurjar Art and Cultural Trust was established with a vision to preserve and promote our rich heritage.</p>
+                    <div class="event-trigger">Learn More</div>
+                </div>
+            </div>
+            
+            <div class="timeline-event right" data-event-url="/event2">
+                <div class="timeline-content">
+                    <div class="event-date">2021</div>
+                    <h3 class="event-title">First Exhibition</h3>
+                    <p class="event-description">Organized our inaugural art exhibition, showcasing local talent and traditional art forms.</p>
+                    <div class="event-trigger">Learn More</div>
+                </div>
+            </div>
+            
+            <!-- Add more events as needed -->
+        </div>
+    </div>
+    
+    <div id="event-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-8 rounded-lg max-w-2xl w-full">
+            <h2 id="modal-title" class="text-2xl font-bold mb-4"></h2>
+            <p id="modal-description" class="mb-4"></p>
+            <button id="modal-close" class="bg-primary-color text-white px-4 py-2 rounded">Close</button>
+            <a id="modal-link" href="#" class="bg-secondary-color text-white px-4 py-2 rounded ml-2">Go to Event Page</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Creative Loading Ideas</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+ * {
+	 box-sizing: border-box;
+	 margin: 0;
+	 padding: 0;
+}
+ body {
+	 font-family: 'Roboto', sans-serif;
+	 background-color: #f0f0f0;
+	 color: #333;
+	 line-height: 1.6;
+}
+ .container {
+	 max-width: 1200px;
+	 margin: 0 auto;
+	 padding: 20px;
+}
+ h1 {
+	 text-align: center;
+	 margin-bottom: 30px;
+}
+ section {
+	 background-color: #fff;
+	 border-radius: 8px;
+	 padding: 20px;
+	 margin-bottom: 20px;
+	 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+ section h2 {
+	 margin-bottom: 15px;
+}
+ .orb-loader {
+	 width: 100px;
+	 height: 100px;
+	 border-radius: 50%;
+	 background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9d56e);
+	 background-size: 400% 400%;
+	 animation: pulse 2s ease-in-out infinite, gradientShift 5s ease infinite;
+}
+ @keyframes pulse {
+	 0%, 100% {
+		 transform: scale(0.8);
+	}
+	 50% {
+		 transform: scale(1.2);
+	}
+}
+ @keyframes gradientShift {
+	 0% {
+		 background-position: 0% 50%;
+	}
+	 50% {
+		 background-position: 100% 50%;
+	}
+	 100% {
+		 background-position: 0% 50%;
+	}
+}
+ .typewriter-loader {
+	 font-family: monospace;
+	 font-size: 20px;
+	 overflow: hidden;
+	 white-space: nowrap;
+	 border-right: 2px solid #333;
+	 width: 0;
+	 animation: typing 3s steps(30, end) infinite, blink 0.5s step-end infinite alternate;
+}
+ @keyframes typing {
+	 from {
+		 width: 0;
+	}
+	 to {
+		 width: 100%;
+	}
+}
+ @keyframes blink {
+	 50% {
+		 border-color: transparent;
+	}
+}
+ .circular-loader {
+	 width: 100px;
+	 height: 100px;
+	 border-radius: 50%;
+	 background: conic-gradient(#4ecdc4 var(--progress, 0%), #e0e0e0 0deg);
+	 animation: progress 2s linear infinite;
+}
+ @keyframes progress {
+	 to {
+		 --progress: 360deg;
+	}
+}
+ .bouncing-dots {
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+}
+ .bouncing-dots .dot {
+	 width: 10px;
+	 height: 10px;
+	 border-radius: 50%;
+	 background-color: #333;
+	 margin: 0 5px;
+	 animation: bounce 0.5s ease-in-out infinite;
+}
+ .bouncing-dots .dot:nth-child(2) {
+	 animation-delay: 0.1s;
+}
+ .bouncing-dots .dot:nth-child(3) {
+	 animation-delay: 0.2s;
+}
+ @keyframes bounce {
+	 0%, 100% {
+		 transform: translateY(0);
+	}
+	 50% {
+		 transform: translateY(-10px);
+	}
+}
+ .liquid-loader {
+	 width: 100px;
+	 height: 100px;
+	 background-color: #e0e0e0;
+	 position: relative;
+	 overflow: hidden;
+}
+ .liquid-loader::after {
+	 content: '';
+	 position: absolute;
+	 bottom: 0;
+	 left: 0;
+	 right: 0;
+	 height: 0;
+	 background-color: #4ecdc4;
+	 animation: fill 2s ease-in-out infinite;
+}
+ @keyframes fill {
+	 0%, 100% {
+		 height: 0;
+	}
+	 50% {
+		 height: 100%;
+	}
+}
+ .neon-loader {
+	 font-size: 24px;
+	 color: #fff;
+	 text-shadow: 0 0 5px #ff00de, 0 0 10px #ff00de, 0 0 20px #ff00de, 0 0 40px #ff00de;
+	 animation: neonPulse 1.5s ease-in-out infinite alternate;
+}
+ @keyframes neonPulse {
+	 from {
+		 opacity: 0.5;
+	}
+	 to {
+		 opacity: 1;
+	}
+}
+ .cube-loader {
+	 width: 100px;
+	 height: 100px;
+	 transform-style: preserve-3d;
+	 animation: rotate 4s linear infinite;
+}
+ .cube-loader .face {
+	 position: absolute;
+	 width: 100%;
+	 height: 100%;
+	 background-color: rgba(78, 205, 196, 0.5);
+	 border: 2px solid #333;
+}
+ .cube-loader .front {
+	 transform: translateZ(50px);
+}
+ .cube-loader .back {
+	 transform: rotateY(180deg) translateZ(50px);
+}
+ .cube-loader .right {
+	 transform: rotateY(90deg) translateZ(50px);
+}
+ .cube-loader .left {
+	 transform: rotateY(-90deg) translateZ(50px);
+}
+ .cube-loader .top {
+	 transform: rotateX(-90deg) translateZ(50px);
+}
+ .cube-loader .bottom {
+	 transform: rotateX(90deg) translateZ(50px);
+}
+ @keyframes rotate {
+	 0% {
+		 transform: rotateX(0deg) rotateY(0deg);
+	}
+	 100% {
+		 transform: rotateX(360deg) rotateY(360deg);
+	}
+}
+ .morphing-loader {
+	 width: 100px;
+	 height: 100px;
+}
+ .morphing-loader svg {
+	 width: 100%;
+	 height: 100%;
+}
+ .morphing-loader path {
+	 fill: #4ecdc4;
+	 animation: morph 3s ease-in-out infinite;
+}
+ @keyframes morph {
+	 0%, 100% {
+		 d: path('M10,10 H90 V90 H10 Z');
+	}
+	 50% {
+		 d: path('M50,10 L90,90 H10 Z');
+	}
+}
+ .glitch-loader {
+	 font-size: 24px;
+	 position: relative;
+	 animation: glitch 1s linear infinite;
+}
+ .glitch-loader::before, .glitch-loader::after {
+	 content: attr(data-text);
+	 position: absolute;
+	 left: 0;
+	 top: 0;
+	 width: 100%;
+	 height: 100%;
+}
+ .glitch-loader::before {
+	 left: 2px;
+	 text-shadow: -2px 0 #ff00de;
+	 clip: rect(24px, 550px, 90px, 0);
+	 animation: glitch-anim 2s linear infinite alternate-reverse;
+}
+ .glitch-loader::after {
+	 left: -2px;
+	 text-shadow: -2px 0 #00fff9;
+	 clip: rect(85px, 550px, 140px, 0);
+	 animation: glitch-anim 2s linear infinite alternate;
+}
+ @keyframes glitch-anim {
+	 0% {
+		 clip: rect(24px, 550px, 90px, 0);
+	}
+	 20% {
+		 clip: rect(85px, 550px, 140px, 0);
+	}
+	 40% {
+		 clip: rect(66px, 550px, 115px, 0);
+	}
+	 60% {
+		 clip: rect(92px, 550px, 140px, 0);
+	}
+	 80% {
+		 clip: rect(58px, 550px, 130px, 0);
+	}
+	 100% {
+		 clip: rect(79px, 550px, 110px, 0);
+	}
+}
+ .particle-swarm {
+	 width: 200px;
+	 height: 100px;
+	 position: relative;
+	 overflow: hidden;
+}
+ .particle-swarm::before {
+	 content: '';
+	 position: absolute;
+	 top: 0;
+	 left: -100%;
+	 width: 200%;
+	 height: 100%;
+	 background: linear-gradient(90deg, transparent, #4ecdc4, transparent);
+	 animation: swarm 2s linear infinite;
+}
+ @keyframes swarm {
+	 0% {
+		 transform: translateX(0);
+	}
+	 100% {
+		 transform: translateX(50%);
+	}
+}
+     </style>
+</head>
+<body>
+    <div class="container">
+        <h1>10 Creative Loading Ideas</h1>
+        
+        <section>
+            <h2>1. Animated Gradient Orb</h2>
+            <div class="orb-loader"></div>
+        </section>
+
+        <section>
+            <h2>2. Typewriter Effect</h2>
+            <div class="typewriter-loader" data-text="Loading..."></div>
+        </section>
+
+        <section>
+            <h2>3. Circular Progress</h2>
+            <div class="circular-loader"></div>
+        </section>
+
+        <section>
+            <h2>4. Bouncing Dots</h2>
+            <div class="bouncing-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Liquid Fill</h2>
+            <div class="liquid-loader"></div>
+        </section>
+
+        <section>
+            <h2>6. Neon Pulse</h2>
+            <div class="neon-loader">Loading...</div>
+        </section>
+
+        <section>
+            <h2>7. Rotating Cube</h2>
+            <div class="cube-loader">
+                <div class="face front"></div>
+                <div class="face back"></div>
+                <div class="face right"></div>
+                <div class="face left"></div>
+                <div class="face top"></div>
+                <div class="face bottom"></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>8. Morphing Shape</h2>
+            <div class="morphing-loader">
+                <svg viewBox="0 0 100 100">
+                    <path d="M10,10 H90 V90 H10 Z" />
+                </svg>
+            </div>
+        </section>
+
+        <section>
+            <h2>9. Glitch Text</h2>
+            <div class="glitch-loader" data-text="Loading...">Loading...</div>
+        </section>
+
+        <section>
+            <h2>10. Particle Swarm</h2>
+            <div class="particle-swarm"></div>
+        </section>
+    </div>
+</body>
+</html>

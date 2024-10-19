@@ -1,0 +1,11 @@
+/* components/sponsors/sponsors.css */
+.sponsor-item {
+    opacity: 0;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.sponsor-item:hover {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}

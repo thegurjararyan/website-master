@@ -1,0 +1,72 @@
+.sponsors-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.sponsors-container::before,
+.sponsors-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 100%;
+    z-index: 2;
+}
+
+.sponsors-container::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(247, 249, 252, 1), rgba(247, 249, 252, 0));
+}
+
+.sponsors-container::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(247, 249, 252, 1), rgba(247, 249, 252, 0));
+}
+
+.sponsors-track {
+    display: flex;
+    animation: scroll 30s linear infinite;
+}
+
+.sponsors-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-100% - 20px));
+    }
+}
+
+.sponsor-item {
+    flex-shrink: 0;
+    margin-right: 20px;
+    /* Adjust the width based on your sponsor logo size */
+    width: 150px;
+    height: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sponsors-track {
+        animation-duration: 20s;
+    }
+    
+    .sponsor-item {
+        width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sponsors-track {
+        animation-duration: 15s;
+    }
+    
+    .sponsor-item {
+        width: 80px;
+    }
+}

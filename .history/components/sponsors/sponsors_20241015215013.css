@@ -1,0 +1,57 @@
+/* components/sponsors/sponsors.css */
+.sponsors-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.sponsors-container::before,
+.sponsors-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+}
+
+.sponsors-container::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(247, 249, 252, 1), rgba(247, 249, 252, 0));
+}
+
+.sponsors-container::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(247, 249, 252, 1), rgba(247, 249, 252, 0));
+}
+
+.sponsors-track {
+    display: flex;
+    animation: scroll 40s linear infinite;
+}
+
+.sponsors-slide {
+    display: flex;
+    align-items: center;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.sponsors-track:hover {
+    animation-play-state: paused;
+}
+
+.sponsors-slide img {
+    transition: transform 0.3s ease;
+}
+
+.sponsors-slide img:hover {
+    transform: scale(1.1);
+}

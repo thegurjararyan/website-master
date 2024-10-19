@@ -1,0 +1,66 @@
+/* components/navigation/navigation.css */
+.menu-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 107, 107, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+.menu-button:hover {
+    background: rgba(255, 107, 107, 0.9);
+    transform: scale(1.1);
+}
+.full-screen-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.9) 0%, rgba(78, 205, 196, 0.9) 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 99;
+}
+.full-screen-menu.active {
+    transform: translateY(0);
+}
+.full-screen-menu a {
+    font-size: 2.5rem;
+    margin: 15px 0;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+}
+.full-screen-menu a:hover,
+.full-screen-menu a.active {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+.full-screen-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    background-color: var(--accent-color);
+    transition: all 0.3s;
+}
+.full-screen-menu a:hover::after,
+.full-screen-menu a.active::after {
+    width: 100%;
+    left: 0;
+}
