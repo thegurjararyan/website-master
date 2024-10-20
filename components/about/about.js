@@ -60,6 +60,7 @@ function animateValue(obj, start, end, duration) {
 
 const connectedGurjars = document.getElementById("connected-gurjars");
 const connectedStates = document.getElementById("connected-states");
+const eventsOrganized = document.getElementById("events-organized");
 
 ScrollTrigger.create({
     trigger: ".stats-section",
@@ -67,6 +68,7 @@ ScrollTrigger.create({
     onEnter: () => {
         animateValue(connectedGurjars, 0, 18, 2000);
         animateValue(connectedStates, 0, 13, 2000);
+        animateValue(eventsOrganized, 0, 8, 2000);
     },
     once: true
 });
