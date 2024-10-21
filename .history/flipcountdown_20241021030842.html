@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flip Down Countdown Timer</title>
+    <style>
+        body {
+            background-color: #333;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .countdown-container {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .countdown-unit {
+            position: relative;
+            width: 80px;
+            height: 120px;
+            perspective: 600px;
+            overflow: hidden;
+        }
+        
+        .flipper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 64px;
+            font-weight: bold;
+            color: white;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .front {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            z-index: 1;
+        }
+        
+        .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transform: translateY(-100%);
+        }
+        
+        .unit-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <div class="countdown-unit">
+            <div class="flipper">
+                <div class="front">00</div>
+                <div class="back">00</div>
+            </div>
+            <div class="unit-label">Days</div>
+        </div>
+        <div class="countdown-unit">
+            <div class="flipper">
+                <div class="front">00</div>
+                <div class="back">00</div>
+            </div>
+            <div class="unit-label">Hours</div>
+        </div>
+        <div class="countdown-unit">
+            <div class="flipper">
+                <div class="front">00</div>
+                <div class="back">00</div>
+            </div>
+            <div class="unit-label">Minutes</div>
+        </div>
+        <div class="countdown-unit">
+            <div class="flipper">
+                <div class="front">00</div>
+                <div class="back">00</div>
+            </div>
+            <div class="unit-label">Seconds</div>
+        </div>
+    </div>
+
+    <script>
+        const countdownUnits = document.querySelectorAll('.countdown-unit');
+        const targetDate = new Date('2024-12-21T00:00:00');
+
+        function updateCountdown() {
+            const currentDate = new Date();
+            const timeDifference = targetDate - currentDate;
+
+            if (timeDifference <= 0) {
+                // Countdown finished
+                countdownUnits.forEach(unit => {
+                    unit.querySelector('.front').textContent = '00';
+                    unit.querySelector('.back').textContent = '00';
+                });
+                return;
+            }
+
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            const units = [days, hours, minutes, seconds];
+            const unitLabels = ['Days', 'Hours', 'Minutes', 'Seconds'];
+
+            countdownUnits.forEach((unit, index) => {
+                const frontElement = unit.querySelector('.front');
+                const backElement = unit.querySelector('.back');
+                const currentNumber = parseInt(frontElement.textContent);
+                const nextNumber = units[index];
+
+                if (currentNumber !== nextNumber) {
+                    frontElement.textContent = String(currentNumber).padStart(2, '0');
+                    backElement.textContent = String(nextNumber).padStart(2, '0');
+
+                    unit.querySelector('.flipper').style.transform = 'rotateX(-90deg)';
+                    setTimeout(() => {
+                        unit.querySelector('.flipper').style.transform = 'rotateX(0deg)';
+                    }, 500);
+                }
+            });
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

@@ -145,7 +145,7 @@ li span{
 .separator {
     margin: 0 10px;
     color: #f9f7f7;
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: bold;
     text-align: center;
 }
@@ -205,6 +205,7 @@ li:first-of-type{
 
     .separator {
         display: none;
+        font-size: 1rem;
     }
 }
 
