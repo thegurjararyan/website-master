@@ -28,7 +28,7 @@ var secondsElement = document.getElementById('seconds');
 
 function countdowntimer(){
 
-    const countdownDate = new Date('Dec 25, 2024 00:00:00').getTime();
+    const countdownDate = new Date('Dec 23, 2024 00:00:00').getTime();
     
     const seconds = 1000;
     const minutes = seconds * 60;
