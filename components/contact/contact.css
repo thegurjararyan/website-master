@@ -1,7 +1,6 @@
 :root {
     --primary-color: #FF6B6B;
     --secondary-color: #4ECDC4;
-    --text-color: #2C3E50;
     --bg-color: #F7F9FC;
     --accent-color: #FFD93D;
 }
@@ -63,7 +62,7 @@
 
 .contact-info p {
     font-size: 1.1rem;
-    color: var(--text-color);
+    color: #000000;
     margin-bottom: 30px;
 }
 
@@ -89,7 +88,7 @@
 
 .social-icon {
     font-size: 1.5rem;
-    color: var(--text-color);
+    color: #000000;
     transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     display: inline-flex;
