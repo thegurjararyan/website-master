@@ -1,0 +1,359 @@
+/* components/navigation/navigation.css */
+:root {
+    --primary-color: #FF6B6B;
+    --secondary-color: #4ECDC4;
+    --text-color: #ffffff;
+    --menu-bg: rgba(255, 107, 107, 0.95);
+    --menu-text: #FFFFFF;
+    --hover-color: #FFD93D;
+    --icon-hover-bg: rgba(255, 255, 255, 0.993);
+    --nav-bg-scrolled: #FFFFFF;
+    --button-bg: rgba(0, 0, 0, 0.5);
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1003; /* Increase z-index to be above full-screen menu */
+    padding: 0.5rem 0.5rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar.scrolled {
+    background-color: var(--nav-bg-scrolled);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.logo-img {
+    height: 80px;
+    width: auto;
+    transition: all 0.3s ease;
+    margin-right: 10px; /* Add some space between the logo and text */
+}
+
+.logo-text {
+    font-size: 1.2rem; /* Default font size for mobile */
+    font-weight: bold;
+    color: #FF6B6B; /* Set the text color to #FF6B6B */
+    transition: all 0.3s ease;
+}
+
+.navbar-logo:hover .logo-img {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.navbar-logo:hover .logo-text {
+    color: var(--hover-color);
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-button {
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1rem; /* Increased font size */
+}
+
+.navbar.scrolled .nav-button {
+    color: var(--primary-color);
+    background-color: transparent;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.donate-btn {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 6px rgba(255, 107, 107, 0.2);
+}
+
+.donate-btn:hover {
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+    box-shadow: 0 6px 8px rgba(255, 107, 107, 0.3);
+}
+
+.hamburger-menu {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(255, 107, 107, 0.2);
+    margin-left: 1rem;
+    z-index: 1003;
+    position: relative;
+}
+
+.hamburger-box {
+    width: 24px;
+    height: 20px;
+    position: relative;
+}
+
+.hamburger-inner {
+    width: 24px;
+    height: 2px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+.hamburger-inner::before,
+.hamburger-inner::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: white;
+    left: 0;
+    transition: all 0.3s ease;
+}
+
+.hamburger-inner::before {
+    top: -7px;
+}
+
+.hamburger-inner::after {
+    bottom: -7px;
+}
+
+.hamburger-menu.active .hamburger-inner {
+    background-color: transparent;
+}
+
+.hamburger-menu.active .hamburger-inner::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.hamburger-menu.active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(-45deg);
+}
+
+.full-screen-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--menu-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1002;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+    padding-top: 120px; /* Increased top padding */
+}
+
+.full-screen-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.menu-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 2rem; /* Added top padding */
+}
+
+.menu-items li {
+    margin: 15px 0; /* Increased vertical margin */
+    width: 100%;
+    text-align: center;
+}
+
+.menu-items a {
+    font-size: 1.8rem; /* Increased font size */
+    color: var(--menu-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.menu-items a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--menu-text);
+    transition: all 0.3s ease;
+}
+
+.menu-items a:hover::after {
+    width: 80%;
+}
+
+.menu-footer {
+    margin-top: 2rem;
+    padding-bottom: 1.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem; /* Increased margin below social links */
+}
+
+.social-icon {
+    color: var(--menu-text);
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    background-color: var(--icon-hover-bg);
+    color: var(--hover-color);
+}
+
+.join-btn {
+    background-color: transparent;
+    color: var(--menu-text);
+    border: 2px solid var(--menu-text);
+    margin-top: 1rem; /* Added margin above the Join Us button */
+}
+
+.join-btn:hover {
+    background-color: var(--menu-text);
+    color: var(--primary-color);
+}
+
+@media screen and (min-width: 769px) {
+    .hamburger-menu {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navbar-right .nav-button:not(.donate-btn):not(.hamburger-menu) {
+        display: none;
+    }
+
+    .hamburger-menu {
+        display: flex;
+    }
+
+    .navbar {
+        padding: 0.3rem 1rem;
+    }
+
+    .logo-img {
+        height: 60px;
+    }
+
+    .full-screen-menu {
+        padding-top: 60px;
+    }
+
+    .menu-content {
+        max-width: 250px;
+    }
+
+    .nav-button {
+        font-size: 1rem; /* Slightly smaller font size for mobile */
+    }
+
+    .full-screen-menu {
+        padding-top: 80px; /* Adjusted top padding for mobile */
+    }
+
+    .menu-items a {
+        font-size: 1.6rem; /* Slightly smaller font size for mobile */
+    }
+}
+
+.logo-text {
+    font-size: 0.9rem; /* Default font size for mobile */
+    font-weight: bold;
+    color: #FF6B6B; /* Set the text color to #FF6B6B */
+    transition: all 0.3s ease;
+}
+
+@media screen and (min-width: 768px) {
+    .logo-text {
+        font-size: 0.8rem; /* Larger font size for tablets and laptops */
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .logo-text {
+        font-size: 1.5rem; /* Even larger font size for desktops */
+    }
+}

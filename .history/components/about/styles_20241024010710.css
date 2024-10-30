@@ -1,0 +1,38 @@
+/* Activities list */
+.activities-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 1rem;
+}
+
+.activities-list li {
+    margin-bottom: 0.75rem;
+    position: relative;
+    padding: 0.75rem 1rem 0.75rem 2rem;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.activities-list li::before {
+    content: '•';
+    color: #e74c3c;
+    font-weight: bold;
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+
+.activity-title {
+    font-weight: bold;
+    color: #2c3e50;
+    transition: color 0.3s ease;
+}
+
+.activities-list li:hover {
+    background-color: #e74c3c;
+    transform: translateX(5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

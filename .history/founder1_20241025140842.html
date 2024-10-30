@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>संस्थापक - गुर्जर आर्ट एंड कल्चर ट्रस्ट</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4; /* Clean light grey background */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .founder-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .founder-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FF6B6B;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #FF6B6B;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .founder-image {
+            width: 100%;
+            height: auto-fit;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        /* Card-style for text */
+        .card {
+            background: #fafafa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #FF6B6B;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Link hover */
+        a {
+            color: #FF6B6B;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #ff4a4a;
+        }
+
+        /* Section hover effect */
+        .section-title:hover {
+            color: #ff4a4a;
+        }
+
+        .founder-name:hover {
+            color: #ff4a4a;
+        }
+
+        /* List styling */
+        ul.list-disc {
+            padding-left: 1.5rem;
+        }
+
+        ul.list-disc li {
+            padding-bottom: 0.5rem;
+        }
+
+        /* New styles for the navbar */
+        .navbar {
+            background-color: #FF6B6B;
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease; /* Added background color transition */
+        }
+
+        .navbar:hover {
+            background-color: #ff4a4a; /* Change background color on hover */
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease; /* Added transform transition */
+        }
+
+        .nav-link:hover {
+            color: #f0f0f0;
+            transform: scale(1.1); /* Scale up the link on hover */
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+
+        /* Adjust the body padding to account for the fixed navbar */
+        body {
+            padding-top: 92px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Updated navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true" alt="Gurjar Arts and Culture Logo" class="logo">
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="content">
+                <div class="card">
+                    <h1 class="founder-name">श्री दिवाकर बिधूड़ी गुर्जर</h1>
+                    <h2 class="founder-title">संस्थापक, गुर्जर आर्ट एंड कल्चर ट्रस्ट</h2>
+
+                    <h3 class="section-title">प्रोफ़ाइल</h3>
+                    <p class="mb-4">
+                        <strong>नाम:</strong> दिवाकर बिधूड़ी गुर्जर<br>
+                        <strong>पिता:</strong> श्री भगवत सिंह<br>
+                        <strong>पता:</strong> 1023 बी, बाजार मोहल्ला, तुगलकाबाद, नई दिल्ली - 110044<br>
+                        <strong>शिक्षा:</strong> एम.ए., एल.एल.बी.<br>
+                        <strong>व्यवसाय:</strong> अधिवक्ता, दिल्ली उच्च न्यायालय और सभी जिला न्यायालयों में अभ्यास करते हुए।
+                    </p>
+
+                    <h3 class="section-title">सामाजिक अनुभव</h3>
+                    <ul class="list-disc list-inside mb-4">
+                        <li>गुर्जर आर्ट एंड कल्चर ट्रस्ट के अध्यक्ष</li>
+                        <li>दिल्ली राज्य डी-नोटिफाइड नोमैडिक ट्राइब्स डेवलपमेंट काउंसिल के अध्यक्ष</li>
+                        <li>गुर्जर समाज समन्वय समिति के कार्यकारी अध्यक्ष</li>
+                    </ul>
+
+                    <h3 class="section-title">विशेष योगदान</h3>
+                    <ul class="list-disc list-inside mb-4">
+                        <li>1857 क्रांति में विमुक्त, घुमंतू जनजाति के क्रांतिकारियों और शहीदों के इतिहास को उजागर करने के लिए "क्रांति यात्रा" का आयोजन।</li>
+                        <li>"1857 क्रांति में गुर्जरों का योगदान" र "गुर्जर प्रतिहार का इतिहास" नामक पुस्तकों के लेखक।</li>
+                        <li>जम्मू-कश्मीर में विमुक्त जनजाति और घुमंतू जनजाति के लोगों के बीच शिक्षा का प्रचार-प्रसार.</li>
+                    </ul>
+
+                    <h3 class="section-title">संपर्क जानकारी</h3>
+                    <p>
+                        <strong>ईमेल:</strong> <a href="mailto:bidhuridiwakar@gmail.com">bidhuridiwakar@gmail.com</a><br>
+                        <strong>मोबाइल नंबर:</strong> 9911990031, 9811990031
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center justify-center">
+                <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/WhatsApp%20Image%202024-10-15%20at%2023.26.14_dfd1ca2c.jpg?raw=true" alt="श्री दिवाकर बिधूड़ी गुर्जर" class="founder-image" id="founderImage">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.to("#founderImage", {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>

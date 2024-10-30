@@ -1,0 +1,63 @@
+-- Create the database
+CREATE DATABASE forms_db;
+
+-- Select the database
+USE forms_db;
+
+-- Create the table to store joined members information
+CREATE TABLE members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    address TEXT NOT NULL,
+    interest VARCHAR(50) NOT NULL,
+    other_interest VARCHAR(100),
+    joined_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the table to store stall information
+CREATE TABLE stalls (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    address TEXT NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    uniqueness TEXT NOT NULL,
+    shops INT NOT NULL,
+    requirements TEXT,
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the table for storing free pass requests
+CREATE TABLE free_passes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    address TEXT NOT NULL,
+    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the volunteers table
+CREATE TABLE volunteers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    address TEXT NOT NULL,
+    gender ENUM('male', 'female', 'other') NOT NULL,
+    age INT NOT NULL,
+    field VARCHAR(100) NOT NULL,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- Create the performances table
+CREATE TABLE performances (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    team_name VARCHAR(100) NOT NULL,
+    category ENUM('dance', 'music', 'singing', 'other') NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    address TEXT NOT NULL,
+    team_size INT DEFAULT 1,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

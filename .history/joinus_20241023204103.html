@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Creative Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .trust-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-input {
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+        }
+
+        .form-input:focus {
+            transform: scale(1.01);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+            outline: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .membership-card {
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(31, 38, 135, 0.4);
+            padding: 2.5rem;
+            color: white;
+            transform: scale(0);
+            transform-origin: center;
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 1000;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .membership-card.visible {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .membership-card:hover {
+            box-shadow: 0 15px 40px rgba(31, 38, 135, 0.6);
+        }
+
+        .membership-card .trust-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #FFE66D;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .membership-card h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .membership-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .membership-card .details {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .membership-card .details p {
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .membership-card .details span:first-child {
+            font-weight: 600;
+            color: #FFE66D;
+        }
+
+        .error-message {
+            color: #FF6B6B;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.visible {
+            opacity: 1;
+        }
+
+        #download-btn {
+            display: none;
+            margin-top: 2rem;
+            background: #FF6B6B;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        #download-btn:hover {
+            background: #FF8E53;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.visible {
+            display: block;
+        }
+
+        .grid > div {
+            height: auto;
+            min-height: 650px;
+        }
+
+        .card {
+            padding: 2rem;
+        }
+
+        .text-content {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .membership-card .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .membership-card .close-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+    <div class="container">
+        <h1 class="text-4xl font-bold text-white text-center mb-8">Gurjar Art and Cultural Trust</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Form Section -->
+            <div class="card p-6" data-aos="fade-right">
+                <h2 class="text-3xl font-bold text-[#FF6B6B] mb-4">Join Our Community</h2>
+                <form id="joinForm" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 font-semibold text-sm">Full Name *</label>
+                        <input type="text" required name="name" class="form-input mt-1 block w-full" />
+                        <span class="error-message">Name is required</span>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold text-sm">Contact Number *</label>
+                        <input type="tel" required pattern="[0-9]{10}" name="contact" class="form-input mt-1 block w-full" />
+                        <span class="error-message">Valid contact number required</span>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold text-sm">Email Address *</label>
+                        <input type="email" required name="email" class="form-input mt-1 block w-full" />
+                        <span class="error-message">Valid email required</span>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold text-sm">Address *</label>
+                        <textarea required name="address" class="form-input mt-1 block w-full"></textarea>
+                        <span class="error-message">Address is required</span>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold text-sm">Field of Interest *</label>
+                        <select required name="interest" id="interestSelect" class="form-input mt-1 block w-full">
+                            <option value="">Select an option</option>
+                            <option value="content">Content Writing</option>
+                            <option value="design">Designing</option>
+                            <option value="dance">Dance</option>
+                            <option value="art">Art</option>
+                            <option value="others">Others</option>
+                        </select>
+                        <span class="error-message">Please select a field</span>
+                    </div>
+                    <div id="otherInterestDiv" style="display: none;">
+                        <label class="block text-gray-700 font-semibold text-sm">Specify Your Interest *</label>
+                        <input type="text" name="otherInterest" id="otherInterest" class="form-input mt-1 block w-full" />
+                        <span class="error-message">Please specify your interest</span>
+                    </div>
+                    <div>
+                        <button type="submit" class="submit-btn w-full py-3 rounded-lg text-white text-lg font-semibold hover:shadow-xl">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Side Card (Trust and Mission) -->
+            <div class="card p-6" data-aos="fade-left">
+                <div class="trust-info">
+                    <div>
+                        <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true" alt="Trust Logo" class="trust-logo">
+                        <p class="text-content text-center">
+                            We believe in fostering creativity and providing a space for artists, designers, and creators to grow. Our
+                            community is centered on innovation and collaboration.
+                        </p>
+                    </div>
+                    <div class="mission-section">
+                        <h3 class="text-xl font-semibold text-[#FF6B6B]">Our Mission</h3>
+                        <p class="text-content">
+                            To empower and inspire individuals in the creative fields to share their talents, collaborate on projects, and create a meaningful impact in the world through their artistry and expertise.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Membership Card Modal -->
+    <div id="membership-card" class="membership-card">
+        <div class="close-btn" id="close-card">&times;</div>
+        <div class="trust-name">Gurjar Art and Cultural Trust</div>
+        <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true" alt="Trust Logo" id="member-logo">
+        <h2 id="member-name">Member Name</h2>
+        <div class="details">
+            <p><span>Member ID:</span> <span id="member-id"></span></p>
+            <p><span>Contact:</span> <span id="member-contact"></span></p>
+            <p><span>Email:</span> <span id="member-email"></span></p>
+            <p><span>Date Joined:</span> <span id="member-date"></span></p>
+        </div>
+        <button id="download-btn">Download Membership Card</button>
+    </div>
+
+    <script>
+        // Form Validation and Card Generation
+        document.getElementById('joinForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const fields = this.querySelectorAll('input[required], textarea[required], select[required]');
+            let valid = true;
+
+            fields.forEach(field => {
+                const errorMessage = field.nextElementSibling;
+                if (!field.checkValidity()) {
+                    errorMessage.classList.add('visible');
+                    valid = false;
+                } else {
+                    errorMessage.classList.remove('visible');
+                }
+            });
+
+            if (valid) {
+                const name = this.querySelector('input[name="name"]').value;
+                const contact = this.querySelector('input[name="contact"]').value;
+                const email = this.querySelector('input[name="email"]').value;
+                const dateJoined = new Date().toLocaleDateString();
+                const memberId = 'GAC' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+                document.getElementById('member-name').textContent = name;
+                document.getElementById('member-contact').textContent = contact;
+                document.getElementById('member-email').textContent = email;
+                document.getElementById('member-date').textContent = dateJoined;
+                document.getElementById('member-id').textContent = memberId;
+
+                const membershipCard = document.getElementById('membership-card');
+                const overlay = document.getElementById('overlay');
+                membershipCard.classList.add('visible');
+                overlay.classList.add('visible');
+
+                setTimeout(() => {
+                    document.getElementById('download-btn').style.display = 'block';
+                }, 1000);
+            }
+        });
+
+        // Close membership card
+        document.getElementById('close-card').addEventListener('click', function() {
+            const membershipCard = document.getElementById('membership-card');
+            const overlay = document.getElementById('overlay');
+            membershipCard.classList.remove('visible');
+            overlay.classList.remove('visible');
+        });
+
+        // Download Membership Card as PNG
+        document.getElementById('download-btn').addEventListener('click', function () {
+            const membershipCard = document.getElementById('membership-card');
+            const downloadBtn = document.getElementById('download-btn');
+            const closeBtn = document.getElementById('close-card');
+            const logo = document.getElementById('member-logo');
+            
+            // Hide download and close buttons
+            downloadBtn.style.display = 'none';
+            closeBtn.style.display = 'none';
+            
+            // Set the logo src to the base64 data
+            const originalSrc = logo.src;
+            logo.src = logo.getAttribute('data-base64');
+            
+            html2canvas(membershipCard, {
+                allowTaint: true,
+                useCORS: true,
+                logging: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'membership-card.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                
+                // Show buttons again after download
+                downloadBtn.style.display = 'block';
+                closeBtn.style.display = 'block';
+                
+                // Restore the original logo src
+                logo.src = originalSrc;
+            });
+        });
+
+        // Show/hide "Other" text box based on selection
+        document.getElementById('interestSelect').addEventListener('change', function() {
+            const otherInterestDiv = document.getElementById('otherInterestDiv');
+            const otherInterestInput = document.getElementById('otherInterest');
+            
+            if (this.value === 'others') {
+                otherInterestDiv.style.display = 'block';
+                otherInterestInput.required = true;
+            } else {
+                otherInterestDiv.style.display = 'none';
+                otherInterestInput.required = false;
+                otherInterestInput.value = ''; // Clear the input when hidden
+            }
+        });
+
+        // Function to convert image to base64
+        function getBase64Image(img) {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            return canvas.toDataURL("image/png");
+        }
+
+        // Load and convert logo to base64
+        window.addEventListener('load', function() {
+            const logo = document.getElementById('member-logo');
+            logo.crossOrigin = "anonymous";
+            logo.onload = function() {
+                logo.setAttribute('data-base64', getBase64Image(logo));
+            };
+            logo.src = "https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true";
+        });
+    </script>
+</body>
+
+</html>

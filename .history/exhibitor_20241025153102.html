@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Exhibitors - Gurjar Mahotsav</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .sponsor-card {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .sponsor-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .logo-container img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        .highlight {
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+
+        /* Updated styles for the navigation bar */
+        .nav-link {
+            position: relative;
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffffff;
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-gray-100 to-gray-200">
+    <!-- Updated navigation bar -->
+    <nav class="bg-[#FF6B6B] shadow-md">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true" alt="Gurjar Mahotsav Logo" class="h-16 w-auto">
+            </div>
+            <div class="flex items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="#contact" class="nav-link">Contact</a> <!-- Added link to contact section -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Existing content -->
+    <div class="flex-grow flex items-center justify-center p-4">
+        <div class="container mx-auto max-w-5xl bg-white p-8 rounded-lg shadow-xl">
+            <h1 class="text-5xl font-bold text-center mb-12 text-gray-800">Our Exhibitors</h1>
+
+            <div class="space-y-12">
+                <!-- Title Sponsor -->
+                <div class="sponsor-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800">Title Sponsor: <span class="text-[#FF6B6B]">Rs. 25 Lakhs</span></h2>
+                    <div class="logo-container mb-6">
+                        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo" class="mx-auto">
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Deliverables are as follows:</h3>
+                    <ul class="list-none space-y-4">
+                        <li><span class="highlight">Dedicated Stall Space - </span>15 X 10 ft with necessary arrangements (2 Tables & 4 chairs with sufficient lightings)</li>
+                        <li><span class="highlight">Online Promotions - </span>Presence on GM Social media pages (FB+Insta+Twitter) + Presence on associated social media pages with reach of 30+ lakhs + Logo & website link on GM Website + Gm X Title Sponsor announcement on all social media pages & whatsapp group</li>
+                        <li><span class="highlight">Physical Promotions - </span>Presence on GM main entry gate (Side panels – 12 X 3 ft) + Logo presence on main LED panel + Logo on main stage side panels + Title sponsor Logo on all banners & hoardings + Logo on banner to be used during all press conferences + Unlimited standees + Permission to put up posters & flier distribution activity during the program + Shout outs at main stage by Celebrities/Anchors during each performance + Logo on print & electronic media + Title sponsor details on GM magazine (50K copies to be distributed)</li>
+                        <li class="font-semibold text-gray-700">Unlimited free car parking passes</li>
+                    </ul>
+                </div>
+
+                <!-- Associate Sponsor -->
+                <div class="sponsor-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800">Associate Sponsor: <span class="text-[#FF6B6B]">Rs. 12 Lakhs</span></h2>
+                    <div class="logo-container mb-6">
+                        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo">
+                        <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/envato-logo-freelogovectors.net_.png?raw=true" alt="Envato Logo">
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Deliverables are as follows:</h3>
+                    <ul class="list-none space-y-4">
+                        <li><span class="highlight">Dedicated Stall Space - </span>10 X 10 ft with necessary arrangements (2 Tables & 4 chairs with sufficient lightings)</li>
+                        <li><span class="highlight">Online Promotions - </span>Presence on GM Social media pages (FB+Insta+Twitter) + Presence on associated social media pages with reach of 10+ lakhs + Logo & website link on GM Website</li>
+                        <li><span class="highlight">Physical Promotions - </span>Presence on GM main entry gate (Side panels – 12 X 3 ft) + Logo presence on main LED panel + Logo on main stage side panels + Associate sponsor Logo on all banners + Logo on banner to be used during all press conferences + 2 standees at the venue + Permission for flier distribution activity during the program + 3 Shout outs at main stage by Celebrities/Anchors during the day + Logo on print media+ Associate sponsor details on GM magazine (50K copies to be distributed)</li>
+                        <li class="font-semibold text-gray-700">4 free car parking passes</li>
+                    </ul>
+                </div>
+
+                <!-- Education Partner -->
+                <div class="sponsor-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800">Education Partner: <span class="text-[#FF6B6B]">Rs. 7 Lakhs</span></h2>
+                    <div class="logo-container mb-6">
+                        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo" class="mx-auto">
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Deliverables are as follows:</h3>
+                    <ul class="list-none space-y-4">
+                        <li><span class="highlight">Dedicated Stall Space - </span>10 X 8 ft with necessary arrangements (2 Tables & 4 chairs with sufficient lightings)</li>
+                        <li><span class="highlight">Online Promotions - </span>Presence on GM Social media pages (FB+Insta+Twitter) + Presence on associated social media pages with reach of 10+ lakhs + Logo & website link on GM Website + Gm X Education partner announcement on all social media pages & whatsapp group</li>
+                        <li><span class="highlight">Physical Promotions - </span>Presence on Education Area entry gate (Header of the gate as Education partner) + Logo presence on main LED panel as education partner + Education partner with logo on all banners + Logo on banner to be used during all press conferences + permission to put 1 standee near main stage + unlimited branding at dedicated stall (within given space) + Permission for flier distribution activity during the program + Permission to collect student leads + Shout outs at main stage as Education partner by Celebrities/Anchors + Logo as Education partner in GM magazine (50K copies to be distributed)</li>
+                        <li class="font-semibold text-gray-700">4 free car parking passes</li>
+                    </ul>
+                </div>
+
+                <!-- Health Partner -->
+                <div class="sponsor-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800">Health Partner: <span class="text-[#FF6B6B]">Rs. 5 Lakhs</span></h2>
+                    <div class="logo-container mb-6">
+                        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo" class="mx-auto">
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Deliverables are as follows:</h3>
+                    <ul class="list-none space-y-4">
+                        <li><span class="highlight">Dedicated Stall Space - </span>With necessary arrangements (2 Tables & 4 chairs with sufficient lightings)</li>
+                        <li><span class="highlight">Online Promotions - </span>Presence on GM Social media pages (FB+Insta+Twitter) + Presence on associated social media pages with reach of 10+ lakhs + Gm X Health partner announcement on all social media pages & whatsapp group</li>
+                        <li><span class="highlight">Physical Promotions - </span>Branding at dedicated Health Area (Header of the gate as Health partner) + Logo presence on main LED panel as Health partner + Health partner with logo on the banner + permission to put 1 standee near entry gate + unlimited branding at dedicated stall (within given space) + Permission to put health check up stalls with dedicated space given + Permission to distribute health related fliers</li>
+                        <li class="font-semibold text-gray-700">4 free car parking passes</li>
+                    </ul>
+                </div>
+
+                <!-- Beverage Partner -->
+                <div class="sponsor-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800">Beverage Partner: <span class="text-[#FF6B6B]">Rs. 4 Lakhs</span></h2>
+                    <div class="logo-container mb-6">
+                        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo" class="mx-auto">
+                    </div>
+                    <p class="text-center text-lg font-semibold text-gray-700">To be discussed (Will be basis on barter deal)</p>
+                </div>
+
+                <!-- Food Partner -->
+                <div class="sponsor-card bg-gray-50 p-8 rounded-lg border border-gray-200">
+                    <h2 class="text-3xl font-semibold mb-6 text-gray-800">Food Partner: <span class="text-[#FF6B6B]">Rs. 3 Lakhs</span></h2>
+                    <div class="logo-container mb-6">
+                        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo" class="mx-auto">
+                    </div>
+                    <p class="text-center text-lg font-semibold text-gray-700">To be discussed (Will be basis on barter deal)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="bg-white p-8 rounded-lg shadow-xl mt-12">
+        <h2 class="text-4xl font-bold text-center mb-6 text-gray-800">Contact Us</h2>
+        <div class="flex flex-col items-center space-y-4">
+            <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true" alt="Trust Logo" class="h-24 w-auto">
+            <p class="text-lg text-gray-700">Gurjar Arts and Culture Trust</p>
+            <p class="text-lg text-gray-700">Email: <a href="mailto:info@gurjarartsandculture.com" class="text-[#FF6B6B]">info@gurjarartsandculture.com</a></p>
+            <p class="text-lg text-gray-700">Contact: +91 9811990031</p>
+        </div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.sponsor-card').forEach((card, index) => {
+            gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom-=100",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+    </script>
+</body>
+</html>

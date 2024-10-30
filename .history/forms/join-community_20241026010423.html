@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .form-input {
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+        }
+
+        .form-input:focus {
+            transform: scale(1.01);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+            outline: none;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .error-message {
+            color: #FF6B6B;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.visible {
+            opacity: 1;
+        }
+
+        .membership-card {
+            width: 100%;
+            max-width: 350px;
+            background: #fff;
+            border: 2px solid #fda085;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            margin: 1rem auto;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            display: none; /* Initially hidden */
+        }
+
+        .membership-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1rem;
+            border-radius: 50%;
+            border: 2px solid #fda085;
+        }
+
+        .membership-card h3 {
+            margin: 0.5rem 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fda085;
+        }
+
+        .membership-card p {
+            margin: 0.25rem 0;
+            font-size: 1rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #fda085;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #f6d365;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+    <div class="container">
+        <div class="card p-6">
+            <h2 class="text-3xl font-bold text-[#FF6B6B] mb-4">Join Our Community</h2>
+            <form id="joinForm" action="process_join_form.php" method="POST" class="space-y-4">
+                <input type="hidden" name="formType" value="joinForm">
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Full Name *</label>
+                    <input type="text" required name="name" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Name is required</span>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Contact Number *</label>
+                    <input type="tel" required pattern="[0-9]{10}" name="contact" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Valid contact number required</span>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Email Address *</label>
+                    <input type="email" required name="email" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Valid email required</span>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Address *</label>
+                    <textarea required name="address" class="form-input mt-1 block w-full"></textarea>
+                    <span class="error-message">Address is required</span>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Field of Interest *</label>
+                    <select required name="interest" id="interestSelect" class="form-input mt-1 block w-full">
+                        <option value="">Select an option</option>
+                        <option value="content">Content Writing</option>
+                        <option value="design">Designing</option>
+                        <option value="dance">Dance</option>
+                        <option value="art">Art</option>
+                        <option value="others">Others</option>
+                    </select>
+                    <span class="error-message">Please select a field</span>
+                </div>
+                <div id="otherInterestDiv" style="display: none;">
+                    <label class="block text-gray-700 font-semibold text-sm">Specify Your Interest *</label>
+                    <input type="text" name="otherInterest" id="otherInterest" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Please specify your interest</span>
+                </div>
+                <div>
+                    <button type="submit" class="submit-btn w-full py-3 rounded-lg text-white text-lg font-semibold hover:shadow-xl">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="membership-card" id="membershipCard">
+            <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true" alt="Trust Logo">
+            <h3>Gurjar Art and Cultural Trust</h3>
+            <p id="cardName"></p>
+            <p id="cardContact"></p>
+            <p id="cardEmail"></p>
+            <p id="cardDate"></p>
+            <a href="#" id="downloadBtn" class="download-btn">Download Card</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('joinForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const fields = this.querySelectorAll('input[required], textarea[required], select[required]');
+            let valid = true;
+
+            fields.forEach(field => {
+                const errorMessage = field.nextElementSibling;
+                if (!field.checkValidity()) {
+                    errorMessage.classList.add('visible');
+                    valid = false;
+                } else {
+                    errorMessage.classList.remove('visible');
+                }
+            });
+
+            if (valid) {
+                // Create form data object
+                const formData = new FormData(this);
+                
+                // Submit the form data using fetch
+                fetch('process_join_form.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const name = this.querySelector('input[name="name"]').value;
+                        const contact = this.querySelector('input[name="contact"]').value;
+                        const email = this.querySelector('input[name="email"]').value;
+                        const dateJoined = new Date().toLocaleDateString();
+
+                        document.getElementById('cardName').textContent = `Name: ${name}`;
+                        document.getElementById('cardContact').textContent = `Contact: ${contact}`;
+                        document.getElementById('cardEmail').textContent = `Email: ${email}`;
+                        document.getElementById('cardDate').textContent = `Date Joined: ${dateJoined}`;
+
+                        const card = document.getElementById('membershipCard');
+                        card.style.display = 'block';
+
+                        const downloadBtn = document.getElementById('downloadBtn');
+                        downloadBtn.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            downloadBtn.style.display = 'none'; // Hide the download button
+                            html2canvas(card).then(canvas => {
+                                const link = document.createElement('a');
+                                link.href = canvas.toDataURL('image/png');
+                                link.download = 'membership_card.png';
+                                link.click();
+                                downloadBtn.style.display = 'inline-block'; // Show the download button again
+                            });
+                        });
+
+                        this.reset();
+                    } else {
+                        alert('Error saving data. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+
+        document.getElementById('interestSelect').addEventListener('change', function () {
+            const otherInterestDiv = document.getElementById('otherInterestDiv');
+            const otherInterestInput = document.getElementById('otherInterest');
+
+            if (this.value === 'others') {
+                otherInterestDiv.style.display = 'block';
+                otherInterestInput.required = true;
+            } else {
+                otherInterestDiv.style.display = 'none';
+                otherInterestInput.required = false;
+                otherInterestInput.value = ''; // Clear the input when hidden
+            }
+        });
+    </script>
+</body>
+
+</html>

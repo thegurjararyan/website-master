@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Creative Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+    <div class="container">
+        <h1 class="text-4xl font-bold text-white text-center mb-8">
+            <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true" alt="Trust Logo" class="inline-block w-16 h-16 mr-2">
+            Gurjar Art and Cultural Trust
+        </h1>
+        <div class="grid gap-6">
+            <!-- Links to Forms -->
+            <div class="card p-6">
+                <h2 class="text-3xl font-bold text-[#FF6B6B] mb-4">Choose a Form to Fill</h2>
+                <ul class="space-y-4">
+                    <li>
+                        <a href="forms/join-community.html" class="block text-lg font-semibold text-white bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53] p-4 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                            Join Our Community
+                        </a>
+                    </li>
+                    <li>
+                        <a href="forms/stall-book.html" class="block text-lg font-semibold text-white bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53] p-4 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                            Stall Book Section
+                        </a>
+                    </li>
+                    <li>
+                        <a href="forms/freepass.html" class="block text-lg font-semibold text-white bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53] p-4 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                            Get Free Pass
+                        </a>
+                    </li>
+                    <li>
+                        <a href="forms/volunteering.html" class="block text-lg font-semibold text-white bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53] p-4 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                            Volunteering Section
+                        </a>
+                    </li>
+                    <li>
+                        <a href="forms/stage-performance.html" class="block text-lg font-semibold text-white bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53] p-4 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105">
+                            Stage Performance
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

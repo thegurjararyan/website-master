@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forms</title>
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4">Join Our Community</h2>
+        <form action="process_join_community.php" method="post" id="joinForm" class="space-y-4">
+            <div>
+                <label class="block text-gray-700">Full Name *</label>
+                <input type="text" name="name" required class="form-input mt-1 block w-full" />
+            </div>
+            <div>
+                <label class="block text-gray-700">Contact Number *</label>
+                <input type="tel" name="contact" required pattern="[0-9]{10}" class="form-input mt-1 block w-full" />
+            </div>
+            <div>
+                <label class="block text-gray-700">Email Address *</label>
+                <input type="email" name="email" required class="form-input mt-1 block w-full" />
+            </div>
+            <div>
+                <label class="block text-gray-700">Address *</label>
+                <textarea name="address" required class="form-input mt-1 block w-full"></textarea>
+            </div>
+            <div>
+                <label class="block text-gray-700">Field of Interest *</label>
+                <select name="interest" required class="form-input mt-1 block w-full">
+                    <option value="">Select an option</option>
+                    <option value="content">Content Writing</option>
+                    <option value="design">Designing</option>
+                    <option value="dance">Dance</option>
+                    <option value="art">Art</option>
+                    <option value="others">Others</option>
+                </select>
+            </div>
+            <div id="otherInterestDiv" style="display: none;">
+                <label class="block text-gray-700">Specify Your Interest *</label>
+                <input type="text" name="otherInterest" id="otherInterest" class="form-input mt-1 block w-full" />
+            </div>
+            <div>
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('joinForm').addEventListener('change', function() {
+            const interestSelect = this.querySelector('select[name="interest"]');
+            const otherInterestDiv = document.getElementById('otherInterestDiv');
+            const otherInterestInput = document.getElementById('otherInterest');
+
+            if (interestSelect.value === 'others') {
+                otherInterestDiv.style.display = 'block';
+                otherInterestInput.required = true;
+            } else {
+                otherInterestDiv.style.display = 'none';
+                otherInterestInput.required = false;
+                otherInterestInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
