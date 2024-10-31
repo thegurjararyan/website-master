@@ -1,14 +1,14 @@
 /* गुर्जर कार्यक्रम CSS */
 
 :root {
-    --primary-color: #FF6B6B;
+    --primary-color: #ed1f24;
     --secondary-color: #4ECDC4;
     --text-color: #333;
     --background-color: #f9f9f9;
 }
 
 .events-section {
-    padding: 100px 20px;
+    padding: 80px 20px;
     text-align: center;
     background: linear-gradient(135deg, var(--background-color), #ffffff);
     font-family: 'Arial', sans-serif;
@@ -16,7 +16,7 @@
 
 .events-section h2 {
     font-size: 3rem;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     color: var(--primary-color);
 }
 
@@ -35,7 +35,7 @@
 
 .flip-card {
     width: 100%;
-    height: 400px;
+    height: 350px;
     margin-bottom: 20px;
     position: relative;
     overflow: hidden;
@@ -54,8 +54,8 @@
     z-index: 2;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .event-image {
@@ -68,15 +68,15 @@
     z-index: -1;
 }
 
-.flip-card-front h3 {
-    margin: 0;
-    padding: 20px;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-    color: white;
+.event-title {
+    color: var(--text-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: black;
 }
 
 .flip-card-back {
-    background-color: var(--primary-color);
+    background-color: #ed1f24;
     color: white;
     padding: 20px;
     display: flex;
@@ -158,24 +158,39 @@
     }
 
     .flip-card {
-        height: 350px;
+        height: 300px;
     }
 
     .event-image {
         height: 100%;
+    }
+
+    .event-title {
+        font-size: 1.2rem;
+        margin-top: 12px;
+    }
+
+    .events-section h2 {
+        margin-bottom: 25px;
     }
 }
 
 @media (max-width: 480px) {
     .events-section h2 {
         font-size: 2rem;
+        margin-bottom: 20px;
     }
 
     .flip-card {
-        height: 300px;
+        height: 250px;
     }
 
     .event-image {
         height: 100%;
+    }
+
+    .event-title {
+        font-size: 1.1rem;
+        margin-top: 10px;
     }
 }

@@ -1,0 +1,181 @@
+/* गुर्जर कार्यक्रम CSS */
+
+:root {
+    --primary-color: #c60000;
+    --secondary-color: #4ECDC4;
+    --text-color: #333;
+    --background-color: #f9f9f9;
+}
+
+.events-section {
+    padding: 100px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--background-color), #ffffff);
+    font-family: 'Arial', sans-serif;
+}
+
+.events-section h2 {
+    font-size: 3rem;
+    margin-bottom: 50px;
+    color: var(--primary-color);
+}
+
+.events-section h3 {
+    font-size: 1.3rem;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.flip-card {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s ease;
+}
+
+.flip-card-front {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.event-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.flip-card-front h3 {
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: white;
+}
+
+.flip-card-back {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(100%);
+    z-index: 1;
+}
+
+.flip-card:hover .flip-card-front {
+    transform: translateY(-100%);
+}
+
+.flip-card:hover .flip-card-back {
+    transform: translateY(0);
+}
+
+.icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.btn {
+    margin-top: 20px;
+    background-color: white;
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* मोडल स्टाइल्स */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 70%;
+    max-width: 600px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .flip-card {
+        height: 350px;
+    }
+
+    .event-image {
+        height: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .events-section h2 {
+        font-size: 2rem;
+    }
+
+    .flip-card {
+        height: 300px;
+    }
+
+    .event-image {
+        height: 100%;
+    }
+}

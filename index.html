@@ -19,11 +19,12 @@
 </head>
 <body>
     <div id="preloader" class="preloader">
-        <div class="logo-container">
+        <div class="preloader-content">
             <img src="assets/logo.png" alt="Gurjar Art & Culture Trust Logo" class="preloader-logo">
-        </div>
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
+            <div class="preloader-text">Gurjar Art and Cultural Trust</div>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
         </div>
     </div>
 
@@ -49,7 +50,17 @@
     <script src="scripts/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
+            // Check if this is the first visit
+            if (!localStorage.getItem('hasVisited')) {
+                // Show preloader for first visit
+                document.getElementById('preloader').style.display = 'flex';
+                
+                // Set the flag in localStorage
+                localStorage.setItem('hasVisited', 'true');
+            } else {
+                // Hide preloader for returning visitors
+                document.getElementById('preloader').style.display = 'none';
+            }
 
             // Load components
             loadComponent('navigation', 'navigation');

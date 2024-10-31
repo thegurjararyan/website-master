@@ -1,5 +1,23 @@
 // scripts/main.js
 
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    const loadingBar = document.getElementById('loadingBar');
+    
+    // Start loading animation
+    requestAnimationFrame(() => {
+        loadingBar.style.width = '100%';
+    });
+    
+    // Hide preloader after 5 seconds
+    setTimeout(() => {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500);
+    }, 7000);
+});
+
 function loadComponent(componentName, targetElementId) {
     const targetElement = document.getElementById(targetElementId);
     
@@ -34,23 +52,4 @@ window.addEventListener('scroll', function() {
     } else {
         scrollToTopBtn.classList.remove('visible');
     }
-});
-
-// Preloader functionality
-window.addEventListener('load', function() {
-    const preloader = document.getElementById('preloader');
-    const loadingProgress = document.querySelector('.loading-progress');
-    
-    // Immediately start the loading progress
-    requestAnimationFrame(() => {
-        loadingProgress.style.width = '100%';
-    });
-    
-    // Wait for 5 seconds before hiding preloader
-    setTimeout(() => {
-        preloader.style.opacity = '0';
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 500);
-    }, 5000);
 });
