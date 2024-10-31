@@ -39,10 +39,18 @@ window.addEventListener('scroll', function() {
 // Preloader functionality
 window.addEventListener('load', function() {
     const preloader = document.getElementById('preloader');
+    const loadingProgress = document.querySelector('.loading-progress');
+    
+    // Immediately start the loading progress
+    requestAnimationFrame(() => {
+        loadingProgress.style.width = '100%';
+    });
+    
+    // Wait for 5 seconds before hiding preloader
     setTimeout(() => {
         preloader.style.opacity = '0';
         setTimeout(() => {
             preloader.style.display = 'none';
-        }, 500); // Match this with the CSS transition duration
-    }, 3000); // 3 seconds delay
+        }, 500);
+    }, 5000);
 });

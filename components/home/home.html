@@ -1,6 +1,10 @@
-<section id="home" class="relative h-screen flex items-center justify-center parallax" style="background-image: url('/api/placeholder/1920/1080');">
-    <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0">
-        <source src="assets/video.mp4" type="video/mp4">
+<section id="home" class="relative h-screen flex items-center justify-center parallax">
+    <video autoplay muted loop class="desktop-video absolute inset-0 w-full h-full object-cover z-0">
+        <source src="assets/laptop-video.mp4" type="video/mp4">
+    </video>
+    
+    <video autoplay muted loop class="mobile-video absolute inset-0 w-full h-full object-cover z-0">
+        <source src="assets/mobile-video.mp4" type="video/mp4">
     </video>
     
     <div class="relative z-10 text-center fade-in" id="intro-section">
@@ -8,7 +12,7 @@
         <div id="countdown" class="countdown">
             <ul>
                 <li>
-                    <span id="days">0)</span>
+                    <span id="days">00</span>
                     <span class="label">Days</span>
                 </li>
                 <li class="separator">:</li>

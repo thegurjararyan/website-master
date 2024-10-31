@@ -112,7 +112,7 @@ body {
 }
 
 .preloader-logo {
-    width: 150px;
+    width: 200px;
     height: auto;
     opacity: 0;
     transform: translateY(-20px);
@@ -162,7 +162,7 @@ body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .preloader-logo {
-        width: 120px;
+        width: 150px;
     }
 
     .loading-bar {

@@ -319,3 +319,23 @@ li span {
         padding: 0.5rem 1rem;
     }
 }
+
+/* Add these new styles */
+.desktop-video {
+    display: block;
+}
+
+.mobile-video {
+    display: none;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .desktop-video {
+        display: none;
+    }
+    
+    .mobile-video {
+        display: block;
+    }
+}
