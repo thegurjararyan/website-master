@@ -198,6 +198,29 @@
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             }
         }
+        .performers-gallery {
+            overflow: hidden;
+            position: relative;
+            padding: 0;
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform 0.5s linear;
+        }
+
+        .performers-gallery .gallery-item {
+            flex: 0 0 auto;
+            width: 250px;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .performers-gallery .gallery-item {
+                width: 150px;
+                margin: 0 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -219,7 +242,7 @@
                 <p class="event-location"><strong>स्थान (Location):</strong> सूरजकुंड, फ़रीदाबाद</p>
                 <div class="event-details">
                     <h3>विवरण (Details):</h3>
-                    <p>गुर्जर महोत्सव 2022 ने लगभग 5 लाख दर्शकों को आकर्षित किया, जिसमें देशभर से आए गुर्जर समुदाय के लोग अपनी समृद्ध सांस्कृतिक विरासत का प्रदर्शन करने के लिए एकत्रित हुए। इस महोत्सव में विभिन्न सांस्कृतिक गतिविधियाँ आयोजित की गईं, जिनमें लोकगीत, रागिनी, लोकनृत्य, शिल्प कला, पारंपरिक खानपान, और पहनावे शामिल थे।</p>
+                    <p>गुर्जर महोत्सव 2022 ने लगभग 5 लाख दर्शकों को आकर्षित किया, जिसमें देशभर से आए गुर्जर सदाय के लोग अपनी समृद्ध सांस्कृतिक विरासत का प्रदर्शन करने के लिए एकत्रित हुए। इस महोत्सव में विभिन्न सांस्कृतिक गतिविधियाँ आयोजित की गईं, जिनमें लोकगीत, रागिनी, लोकनृत्य, शिल्प कला, पारंपरिक खानपान, और पहनावे शामिल थे।</p>
 
                     <h4>सांस्कृतिक गतिविधियाँ:</h4>
                     <ul>
@@ -249,6 +272,51 @@
                     <img src="../assets/mahotsav.jpg" alt="गुर्जर महोत्सव - शिल्प कला प्रदर्शनी">
                     <div class="view-image-overlay">
                         <span class="view-image-text">देखें</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-info">
+                <h3>मुख्य कलाकार (Main Performers)</h3>
+                <p>गुर्जर महोत्सव 2022 में प्रस्तुति देने वाले प्रमुख कलाकार:</p>
+            </div>
+            <div class="event-gallery performers-gallery">
+                <div class="gallery-track">
+                    <div class="gallery-item">
+                        <img src="../assets/eventperformer/performer1.jpg" alt="कलाकार 1 - गुर्जर महोत्सव">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">देखें</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../assets/eventperformer/performer2.jpg" alt="कलाकार 2 - गुर्जर महोत्सव">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">देखें</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../assets/eventperformer/performer3.jpg" alt="कलाकार 3 - गुर्जर महोत्सव">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">देखें</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../assets/eventperformer/performer4.jpg" alt="कलाकार 4 - गुर्जर महोत्सव">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">देखें</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../assets/eventperformer/performer5.jpg" alt="कलाकार 5 - गुर्जर महोत्सव">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">देखें</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../assets/eventperformer/performer6.jpg" alt="कलाकार 6 - गुर्जर महोत्सव">
+                        <div class="view-image-overlay">
+                            <span class="view-image-text">देखें</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -304,6 +372,46 @@
         });
 
         setupGalleryItemListeners();
+
+        // Initialize performers gallery
+        const performersGallery = document.querySelector('.performers-gallery');
+        const galleryTrack = performersGallery.querySelector('.gallery-track');
+
+        // Clone gallery items for seamless loop
+        const originalItems = galleryTrack.querySelectorAll('.gallery-item');
+        const itemWidth = window.innerWidth < 768 ? 160 : 270; // 150px/250px width + 10px/20px margin
+        const itemsToClone = originalItems.length;
+
+        originalItems.forEach(item => {
+            const clone = item.cloneNode(true);
+            galleryTrack.appendChild(clone);
+        });
+
+        // Set up animation
+        let currentPosition = 0;
+
+        function moveGallery() {
+            currentPosition -= 0.5; // Reduced speed for smoother animation
+            galleryTrack.style.transform = `translateX(${currentPosition}px)`;
+
+            // Reset position when needed
+            if (currentPosition <= -itemWidth * itemsToClone) {
+                currentPosition += itemWidth * itemsToClone;
+                galleryTrack.style.transition = 'none';
+                galleryTrack.style.transform = `translateX(${currentPosition}px)`;
+                void galleryTrack.offsetWidth; // Trigger reflow
+                galleryTrack.style.transition = 'transform 0.5s linear';
+            }
+
+            requestAnimationFrame(moveGallery);
+        }
+
+        moveGallery();
+
+        // Update itemWidth on window resize
+        window.addEventListener('resize', function() {
+            itemWidth = window.innerWidth < 768 ? 160 : 270;
+        });
     </script>
 </body>
 </html>
