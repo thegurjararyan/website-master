@@ -50,17 +50,7 @@
     <script src="scripts/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if this is the first visit
-            if (!localStorage.getItem('hasVisited')) {
-                // Show preloader for first visit
-                document.getElementById('preloader').style.display = 'flex';
-                
-                // Set the flag in localStorage
-                localStorage.setItem('hasVisited', 'true');
-            } else {
-                // Hide preloader for returning visitors
-                document.getElementById('preloader').style.display = 'none';
-            }
+            
 
             // Load components
             loadComponent('navigation', 'navigation');

@@ -2,20 +2,24 @@
 
 window.addEventListener('load', function() {
     const preloader = document.getElementById('preloader');
-    const loadingBar = document.getElementById('loadingBar');
+    const loadingBar = document.querySelector('.loading-bar');
+    
+    // Prevent scroll while preloader is active
+    document.body.style.overflow = 'hidden';
     
     // Start loading animation
     requestAnimationFrame(() => {
         loadingBar.style.width = '100%';
     });
     
-    // Hide preloader after 5 seconds
+    // Hide preloader after animation
     setTimeout(() => {
         preloader.style.opacity = '0';
         setTimeout(() => {
             preloader.style.display = 'none';
+            document.body.style.overflow = ''; // Restore scrolling
         }, 500);
-    }, 7000);
+    }, 5000);
 });
 
 function loadComponent(componentName, targetElementId) {
