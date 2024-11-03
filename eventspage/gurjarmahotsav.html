@@ -64,7 +64,7 @@
         }
         .container {
             max-width: 1200px;
-            margin: 5rem auto 2rem;
+            margin: 1rem auto 2rem;
             padding: 0 1rem;
         }
         .event {
@@ -221,6 +221,60 @@
                 margin: 0 5px;
             }
         }
+
+        .insta-banner {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+            padding: 0.8rem;
+            text-align: center;
+            margin-top: 72px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            color: white;
+        }
+
+        .insta-banner a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .insta-banner a:hover {
+            opacity: 0.8;
+        }
+
+        .insta-banner img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .insta-banner .tagline {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .insta-banner {
+                margin-top: 65px;
+                padding: 0.5rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .insta-banner a {
+                font-size: 1rem;
+            }
+            
+            .insta-banner .tagline {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -233,7 +287,13 @@
             <a href="../index.html#" class="btn">Home</a>
         </div>
     </nav>
-    
+    <div class="insta-banner">
+        <a href="https://www.instagram.com/gurjarmahotsav" target="_blank">
+            <img src="../assets/insta.png" alt="Instagram">
+            @gurjarmahotsav
+        </a>
+        <span class="tagline">Follow us for regular updates</span>
+    </div>
     <div class="container">
         <div class="event">
             <div class="event-info">
