@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gurjar Art and Culture Trust Events</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --text-color: #333333;
+            --light-bg: #f9f9f9;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo { height: 50px; }
+
+        .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-buttons { display: flex; gap: 1rem; }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e05555;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 7rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .event-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+        }
+
+        .card-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .card-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .event-date {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            background-color: #e05555;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: row;
+                align-items: center;
+                padding: 0.5rem 1rem;
+            }
+
+            .logo-title {
+                flex-grow: 1;
+                justify-content: flex-start;
+                margin-bottom: 0;
+            }
+
+            .title {
+                font-size: 1rem;
+            }
+
+            .nav-buttons {
+                flex-shrink: 0;
+                justify-content: flex-end;
+            }
+
+            .btn {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.9rem;
+            }
+
+            .container {
+                margin-top: 5rem;
+                padding: 0 0.5rem;
+            }
+
+            .event-card {
+                margin-bottom: 1.5rem;
+            }
+
+            .card-image-container {
+                height: 300px;
+            }
+
+            .card-content {
+                padding: 1.5rem;
+            }
+
+            .card-content h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .event-card {
+                flex-direction: row;
+                height: 400px;
+            }
+
+            .card-image-container {
+                width: 50%;
+                height: 100%;
+            }
+
+            .card-content {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-title">
+            <img src="https://tinypic.host/images/2024/10/25/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png" alt="Gurjar Arts and Culture Trust Logo" class="logo">
+            <span class="title">GACT Events</span>
+        </div>
+        <div class="nav-buttons">
+            <a href="../index.html" class="btn">Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Event Card 1 -->
+        <div class="event-card">
+            <div class="card-image-container">
+                <img src="../assets/mahotsav7.jpg" alt="Gurjar Thali" class="card-image">
+            </div>
+            <div class="card-content">
+                <h2>गुर्जर महोत्सव (Gurjar Mahotsav) 2022</h2>
+                <p class="event-date"><strong>आयोजन तिथि:</strong> 23-24 दिसंबर 2022</p>
+                <p>गुर्जर महोत्सव 2022 ने लगभग 5 लाख दर्शकों को आकर्षित किया, जिसमें देशभर से आए गुर्जर सदाय के लोग अपनी समृद्ध सांस्कृतिक विरासत का प्रदर्शन करने के लिए एकत्रित हुए। इस महोत्सव में विभिन्न सांस्कृतिक गतिविधियाँ आयोजित की गईं, जिनमें लोकगीत, रागिनी, लोकनृत्य, शिल्प कला, पारंपरिक खानपान, और पहनावे शामिल थे।</p>
+                <a href="../eventspage/GM1.html" class="read-more">विस्तृत जानकारी</a>
+            </div>
+        </div>
+
+        <!-- Event Card 2 -->
+        <div class="event-card">
+            <div class="card-image-container">
+                <img src="../assets/mahotsav7.jpg" alt="Gurjar Thali" class="card-image">
+            </div>
+            <div class="card-content">
+                <h2>गुर्जर महोत्सव (Gurjar Mahotsav) 2023</h2>
+                <p class="event-date"><strong>आयोजन तिथि:</strong> 23-24 दिसंबर 2023</p>
+                <p>गुर्जर महोत्सव 2023 ने देशभर से आए लगभग 5 लाख दर्शकों को आकर्षित किया, जिसमें गुर्जर समुदाय के लोग अपनी समृद्ध सांस्कृतिक धरोहर का जश्न मनाने के लिए एकत्रित हुए। इस महोत्सव में लोकगीत, रागिनी, लोकनृत्य, शिल्पकला, पारंपरिक भोजन, और पहनावे जैसी कई सांस्कृतिक गतिविधियों का आयोजन किया गया, जो गुर्जर संस्कृति की जीवंतता को प्रदर्शित करती हैं।</p>
+                <a href="../eventspage/GM2.html" class="read-more">विस्तृत जानकारी</a>
+            </div>
+        </div>
+
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Gurjar Art and Culture Trust. All rights reserved.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from(".navbar", {duration: 1, y: -100, opacity: 0, ease: "power3.out"});
+        
+        gsap.utils.toArray(".event-card").forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom-=100",
+                },
+                duration: 1,
+                opacity: 0,
+                y: 50,
+                delay: 0.2 * index,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>

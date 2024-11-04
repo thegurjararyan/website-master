@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Submit Your Business Idea</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="icon" type="image/png" href="../assets/logo.png">
+    
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    
+            body {
+                font-family: 'Poppins', sans-serif;
+                background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem 0;
+            }
+    
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+                width: 100%;
+            }
+    
+            .card {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 20px;
+                box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+                backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                transition: all 0.3s ease;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                padding: 2rem;
+                position: relative;
+                overflow: hidden;
+            }
+    
+            .form-input {
+                transition: all 0.3s ease;
+                border: 1px solid #e2e8f0;
+                padding: 0.5rem 1rem;
+            }
+    
+            .form-input:focus {
+                transform: scale(1.01);
+                box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+                outline: none;
+            }
+    
+            .submit-btn {
+                background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+                transition: all 0.3s ease;
+                margin-top: 1rem;
+                cursor: pointer;
+            }
+    
+            .submit-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            }
+    
+            .error-message {
+                color: #FF6B6B;
+                font-size: 0.75rem;
+                margin-top: 0.25rem;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+    
+            .error-message.visible {
+                opacity: 1;
+            }
+        </style>
+    </head>
+<body class="text-gray-800">
+    <div class="container">
+        <div class="card p-6">
+            <h2 class="text-3xl font-bold text-[#FF6B6B] mb-4">Submit Your Business Idea</h2>
+            <form id="businessForm" action="process_business_form.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <input type="hidden" name="formType" value="businessForm">
+                
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Full Name *</label>
+                    <input type="text" required name="name" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Name is required</span>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Contact Number *</label>
+                    <input type="tel" required pattern="[0-9]{10}" name="contact" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Valid contact number required</span>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Email Address *</label>
+                    <input type="email" required name="email" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Valid email required</span>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Address *</label>
+                    <textarea required name="address" class="form-input mt-1 block w-full"></textarea>
+                    <span class="error-message">Address is required</span>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Business Idea *</label>
+                    <textarea required name="businessIdea" class="form-input mt-1 block w-full" rows="5" 
+                        placeholder="Please describe your business idea in detail..."></textarea>
+                    <span class="error-message">Business idea is required</span>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Business Proposal Document</label>
+                    <input type="file" name="document" accept=".pdf,.doc,.docx" 
+                        class="form-input mt-1 block w-full" />
+                    <p class="text-sm text-gray-500 mt-1">Accepted formats: PDF, DOC, DOCX (Max size: 5MB)</p>
+                    <span class="error-message">Invalid file format or size</span>
+                </div>
+
+                <div>
+                    <button type="submit" class="submit-btn w-full py-3 rounded-lg text-white text-lg font-semibold hover:shadow-xl">
+                        Submit Business Idea
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('businessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fields = this.querySelectorAll('input[required], textarea[required]');
+            let valid = true;
+
+            fields.forEach(field => {
+                const errorMessage = field.nextElementSibling;
+                if (!field.checkValidity()) {
+                    errorMessage.classList.add('visible');
+                    valid = false;
+                } else {
+                    errorMessage.classList.remove('visible');
+                }
+            });
+
+            // File validation
+            const fileInput = this.querySelector('input[type="file"]');
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                
+                if (file.size > maxSize || !allowedTypes.includes(file.type)) {
+                    fileInput.nextElementSibling.nextElementSibling.classList.add('visible');
+                    valid = false;
+                }
+            }
+
+            if (valid) {
+                const formData = new FormData(this);
+                
+                fetch('process_business_form.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Your business idea has been submitted successfully!');
+                        this.reset();
+                    } else {
+                        alert('Error submitting form. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

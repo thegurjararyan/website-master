@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - GACT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --primary-light: #ff8585;
+            --primary-dark: #ff5252;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .description-section {
+            flex: 1;
+            padding: 3rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+
+        .payment-section {
+            flex: 1;
+            padding: 3rem;
+            background: white;
+        }
+
+        .trust-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .trust-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .trust-info h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .trust-tagline {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .qr-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: #fff5f5;
+            border-radius: 15px;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 10px;
+            padding: 10px;
+            border: 3px solid var(--primary-light);
+        }
+
+        .download-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            margin: 1rem auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-item {
+            margin: 1rem 0;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .detail-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .copy-text {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .copy-text:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 20px;
+            }
+
+            .description-section,
+            .payment-section {
+                padding: 2rem;
+            }
+
+            .trust-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .qr-code {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            color: rgb(255, 0, 0);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .back-btn i {
+            margin-right: 5px;
+        }
+
+        .description-content {
+            margin-top: 2rem;
+        }
+
+        .content-text p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .description-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .back-btn {
+                top: 10px;
+                left: 10px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .page-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .header-nav {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .container {
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .description-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                padding: 15px;
+            }
+
+            .header-nav {
+                margin-bottom: 15px;
+            }
+
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .description-content h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="header-nav">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+        <div class="container">
+            <div class="description-section">
+                <div class="trust-header">
+                    <img src="../assets/logo.png" alt="GACT Logo" class="trust-logo">
+                    <div class="trust-info">
+                        <h1>Gurjar Art & Cultural Trust</h1>
+                        <p class="trust-tagline">Preserving Heritage, Empowering Art</p>
+                    </div>
+                </div>
+                <div class="description-content">
+                    <h3>Gurjar Mahotsav 2024 Haryana</h3>
+                    <div class="content-text">
+                        <p style="font-weight: bold;">An attempt to connect with the Gurjars from all over the world.</p>
+                        <p>A call of Clarion to announce the first of its kind, a unique show of ethnicity and culture on 23, 24 & 25 Dec 2024, at Surajkund Mela ground.</p>
+                        <p>Here you will be able to witness the emergence of a culturally vibrant and throbbing Gurjar community that is leaving behind the cold contempt and neglect of thousands of years, coping well to keep pace with the Contemporary Times and rising slowly and steadily at all levels of performance, be it art, education, sports or politics at both national and international levels.</p>
+                        <p>The authentic art and artisanship, craft and culture, dress and dishes, dance and dialect, trade, and traditions of large-bodied, simple-hearted Gurjars will be on display here.</p>
+                        <p>Come one and all; bring family and neighbors.</p>
+                        <p>Watch, participate, and get a chance to be a part of making and creating history.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-section">
+                <div class="qr-section">
+                    <img id="qr-code" class="qr-code" src="../assets/UPIQR.png" alt="Payment QR Code">
+                    <button onclick="downloadQR()" class="download-btn">
+                        <span>Download QR</span>
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+
+                <div class="payment-details">
+                    <div class="detail-item">
+                        <h3>UPI ID</h3>
+                        <p class="copy-text" data-copy="gact2.05@cmsidfc">
+                            gact2.05@cmsidfc
+                            <span class="tooltip">Click to copy</span>
+                        </p>
+                    </div>
+
+                    <div class="detail-item">
+                        <h3>Bank Details</h3>
+                        <p class="copy-text" data-copy="Gurjar Art and Culture Trust">
+                            Account Name: Gurjar Art and Culture Trust
+                            <span class="tooltip">Click to copy</span>
+                        </p>
+                        <p class="copy-text" data-copy="10147039561">
+                            Account Number: 10147039561
+                            <span class="tooltip">Click to copy</span>
+                        </p>
+                        <p class="copy-text" data-copy="IDFB0020102">
+                            IFSC Code: IDFB0020102
+                            <span class="tooltip">Click to copy</span>
+                        </p>
+                        <p>Bank Name: IDFC First Bank</p>
+                        <p>Branch: New Friends Colony, New Delhi</p>
+                        <p>Account Type: Savings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadQR() {
+            const qrImage = document.getElementById('qr-code');
+            const link = document.createElement('a');
+            link.href = qrImage.src;
+            link.download = 'GACT-payment-qr.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function copyToClipboard(element) {
+            const textToCopy = element.getAttribute('data-copy');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const tooltip = element.querySelector('.tooltip');
+                const originalText = tooltip.textContent;
+                tooltip.textContent = 'Copied!';
+                setTimeout(() => {
+                    tooltip.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Add click event listeners to copy-text elements
+        document.querySelectorAll('.copy-text').forEach(element => {
+            element.addEventListener('click', function() {
+                copyToClipboard(this);
+            });
+        });
+    </script>
+</body>
+</html>
+

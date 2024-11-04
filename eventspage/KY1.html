@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gurjar Art and Culture Trust Events</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --text-color: #333333;
+            --light-bg: #f9f9f9;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo { height: 50px; }
+        .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .nav-buttons { display: flex; gap: 1rem; }
+        .btn {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #e05555;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 5rem auto 2rem;
+            padding: 0 1rem;
+        }
+        .event {
+            background-color: #ffffff;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .event-info {
+            padding: 2rem;
+        }
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        .event-date, .event-location {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .event-details h3, .event-details h4 {
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .event-details ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .event-details p {
+            margin-bottom: 1rem;
+        }
+        .event-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .view-image-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .view-image-overlay { opacity: 1; }
+        .view-image-text {
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .fullview-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .fullview-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .fullview-image {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        .fullview-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: row; /* Change from column to row */
+                align-items: center; /* Center align items vertically */
+                justify-content: space-between; /* Space items evenly */
+                padding: 0.5rem 1rem; /* Adjust padding */
+            }
+            .logo-title {
+                flex-grow: 1; /* Allow logo-title to take available space */
+                justify-content: flex-start; /* Align logo-title to the start */
+                margin-bottom: 0; /* Remove bottom margin */
+            }
+            .title {
+                font-size: 1rem;
+            }
+            .nav-buttons {
+                flex-shrink: 0; /* Prevent nav-buttons from shrinking */
+                justify-content: flex-end; /* Align buttons to the end */
+            }
+            .btn {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.9rem;
+            }
+            .container {
+                margin-top: 7rem;
+            }
+            .event-info {
+                padding: 1rem;
+            }
+            .event-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-title">
+            <img src="../assets/logo.png" alt="Gurjar Arts and Culture Trust Logo" class="logo">
+            <span class="title">Gurjar Art and Culture Trust Events</span>
+        </div>
+        <div class="nav-buttons">
+            <a href="../krantiyatraall.html" class="btn">Back to Kranti Yatra</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="event">
+            <div class="event-info">
+                <h2>क्रांति यात्रा (Kranti Yatra) 2022</h2>
+                <div class="event-details">
+                    <p class="event-date"><strong>आयोजन तिथि (Event Date):</strong> 10 मई 2022</p>
+                    <p class="event-location"><strong>मार्ग (Route):</strong> मेरठ से दिल्ली, राजघाट तक</p>
+                    <h4>विवरण (Details):</h4>
+                    <p>क्रांति यात्रा 2022 का उद्देश्य 1857 की स्वतंत्रता संग्राम में गुर्जर समुदाय के योगदान को उजागर करना और स्वतंत्रता सेनानियों को श्रद्धांजलि अर्पित करना था। इस यात्रा में देशभक्ति और स्वतंत्रता की भावना को प्रबल करने का प्रयास किया गया।</p>
+                    <h4>यात्रा का अनुभव:</h4>
+                    <p>यात्रा में भाग लेने वाले गुर्जर समुदाय के सदस्य अपने पूर्वजों की शहादत को याद करते हुए, देशभक्ति के गीत गाते और नारे लगाते रहे।</p>
+                    <h4>महत्व (Significance):</h4>
+                    <p>यह यात्रा गुर्जर समुदाय की देश के प्रति समर्पण भावना का प्रतीक बनी और उन्होंने स्वतंत्रता संग्राम के शहीदों को श्रद्धांजलि दी।</p>
+                </div>
+            </div>
+            <div class="event-gallery">
+                <div class="gallery-item">
+                    <img src="../assets/krantiyatra1-1.jpg" alt="क्रांति यात्रा 2022 - शुरुआत">
+                    <div class="view-image-overlay">
+                        <span class="view-image-text">देखें</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../assets/krantiyatra1-2.jpg" alt="क्रांति यात्रा 2022 - मार्ग">
+                    <div class="view-image-overlay">
+                        <span class="view-image-text">देखें</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="../assets/krantiyatra1-3.jpg" alt="क्रांति यात्रा 2022 - राजघाट">
+                    <div class="view-image-overlay">
+                        <span class="view-image-text">देखें</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fullview-overlay" id="fullviewOverlay">
+        <img src="" alt="Full view image" class="fullview-image" id="fullviewImage">
+        <div class="fullview-close" onclick="closeFullview()">&times;</div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Gurjar Art and Culture Trust. All rights reserved.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate the navbar
+        gsap.from(".navbar", {
+            duration: 1,
+            y: -100,
+            opacity: 0,
+            ease: "power3.out"
+        });
+
+        // Animate each event section
+        gsap.utils.toArray(".event").forEach((event, index) => {
+            gsap.from(event, {
+                scrollTrigger: {
+                    trigger: event,
+                    start: "top bottom-=100",
+                },
+                duration: 1,
+                opacity: 0,
+                y: 50,
+                delay: 0.2 * index,
+                ease: "power3.out"
+            });
+        });
+
+        // Animate the container content
+        gsap.from(".container", {
+            scrollTrigger: {
+                trigger: ".container",
+                start: "top bottom-=100",
+            },
+            duration: 1,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out"
+        });
+
+        const fullviewOverlay = document.getElementById('fullviewOverlay');
+        const fullviewImage = document.getElementById('fullviewImage');
+
+        function setupGalleryItemListeners() {
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    fullviewImage.src = this.querySelector('img').src;
+                    fullviewOverlay.classList.add('active');
+                });
+            });
+        }
+
+        function closeFullview() {
+            fullviewOverlay.classList.remove('active');
+        }
+
+        fullviewOverlay.addEventListener('click', function(e) {
+            if (e.target === this) closeFullview();
+        });
+
+        setupGalleryItemListeners();
+    </script>
+</body>
+</html>

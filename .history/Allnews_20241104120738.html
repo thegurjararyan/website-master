@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News - GACT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .news-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #FF6B6B;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .read-more-btn {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            transition: all 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar fixed w-full top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <img src="../assets/logo.png" alt="GACT Logo" class="h-12">
+                    <span class="text-xl font-bold text-gray-800">GACT News</span>
+                </div>
+                <a href="../index.html" class="nav-link text-gray-600 hover:text-gray-900">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pt-24 pb-12">
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Featured News</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- News Card 1 -->
+                <div class="news-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="../assets/news/13statethumb.jpg" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">गुर्जर महोत्सव में दिखाई दी 13 प्रदेशों की संस्कृति</h3>
+                        <button class="read-more-btn text-white px-6 py-2 rounded-full flex items-center" onclick="window.location.href='news/A1.html'">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- News Card 2 -->
+                <div class="news-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="../assets/news/tms.JPG" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">हरियाणा की लोक स्मृति को ताज़ा कर रहा है गुर्जर महोत्सव</h3>
+                        <button class="read-more-btn text-white px-6 py-2 rounded-full flex items-center" onclick="window.location.href='news/A2.html'">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- News Card 3 -->
+                <div class="news-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="../assets/news/thumbuni.JPG" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">देहरादून में यूनिवर्सिटी बनाने का ऐलान</h3>
+                        <button class="read-more-btn text-white px-6 py-2 rounded-full flex items-center" onclick="window.location.href='news/A3.html'">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- News Card 4 -->
+                <div class="news-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="../assets/news/10kr.jpg" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">10 से क्रांति यात्रा निकलेगा गुर्जर आर्ट एंड कल्चर ट्रस्ट</h3>
+                        <button class="read-more-btn text-white px-6 py-2 rounded-full flex items-center" onclick="window.location.href='news/A4.html'">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- News Card 5 -->
+                <div class="news-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="../assets/news/tms1.JPG" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">गुर्जर महोत्सव में उमड़ी लाखों की भीड़ !!</h3>
+                        <button class="read-more-btn text-white px-6 py-2 rounded-full flex items-center" onclick="window.location.href='news/A5.html'">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- News Card 6 -->
+                <div class="news-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="../assets/news/last.JPG" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">महोत्सव में बिखरेगी गुर्जर संस्कृति की छठा</h3>
+                        <button class="read-more-btn text-white px-6 py-2 rounded-full flex items-center" onclick="window.location.href='news/A6.html'">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
