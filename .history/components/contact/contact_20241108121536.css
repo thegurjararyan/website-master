@@ -1,0 +1,246 @@
+:root {
+    --primary-color: #FF6B6B;
+    --secondary-color: #14cfc3;
+    --bg-color: #F7F9FC;
+    --accent-color: #FFD93D;
+}
+
+.contact-section {
+    background-color: var(--bg-color);
+    padding: 80px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.contact-info {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.logo-animation {
+    width: 150px;
+    animation: logoFloat 3s ease-in-out infinite;
+    max-width: 100%;
+    height: auto;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.contact-info h2 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.contact-info p {
+    font-size: 1.1rem;
+    color: #000000;
+    margin-bottom: 30px;
+}
+
+.contact-email {
+    display: inline-block;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    word-break: break-word;
+    max-width: 100%;
+    padding: 0 10px;
+}
+
+.contact-email:hover {
+    color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    font-size: 1.5rem;
+    color: #000000;
+    transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.social-icon:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.social-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.social-icon:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.youtube-showcase {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.youtube-showcase h3 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%;
+}
+
+.youtube-video {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.youtube-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.youtube-channel-link {
+    display: inline-block;
+    background-color:var(--primary-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--bg-color), var(--secondary-color), var(--accent-color));
+    background-size: 400% 400%;
+    opacity: 0.1;
+    z-index: 0;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 40px 0;
+    }
+
+    .contact-info h2 {
+        font-size: 2rem;
+    }
+
+    .contact-email {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-section {
+        padding: 30px 0;
+    }
+
+    .contact-info h2 {
+        font-size: 1.8rem;
+    }
+
+    .youtube-showcase h3 {
+        font-size: 1.6rem;
+    }
+
+    .logo-animation {
+        width: 120px;
+    }
+
+    .youtube-channel-link {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}

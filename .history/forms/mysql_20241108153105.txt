@@ -1,0 +1,111 @@
+-- Create the database
+CREATE DATABASE forms_db;
+
+-- Select the database
+USE forms_db;
+
+-- Create the table to store joined members information
+CREATE TABLE members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(20) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    address TEXT NOT NULL,
+    house_number VARCHAR(20) NOT NULL,
+    lane VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    pincode VARCHAR(10) NOT NULL,
+    interest VARCHAR(50) NOT NULL,
+    blood_group VARCHAR(5) NOT NULL,
+    profession VARCHAR(50) NOT NULL,
+    other_interest TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_email (email),
+    UNIQUE KEY unique_contact (contact)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Create the table to store stall information
+CREATE TABLE stalls (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    house_number VARCHAR(50) NOT NULL,
+    lane VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    pincode VARCHAR(6) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    uniqueness TEXT NOT NULL,
+    shops INT NOT NULL CHECK (shops >= 1 AND shops <= 5),
+    requirements TEXT,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_submission_date (submission_date),
+    INDEX idx_contact (contact)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- Create table for free passes
+CREATE TABLE free_passes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(20) NOT NULL,
+    house_number VARCHAR(20) NOT NULL,
+    lane VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    pincode VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_contact (contact)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+-- Create the volunteers table
+CREATE TABLE volunteers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    house_number VARCHAR(50) NOT NULL,
+    lane VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    pincode VARCHAR(6) NOT NULL,
+    gender ENUM('male', 'female', 'other') NOT NULL,
+    age INT NOT NULL,
+    field VARCHAR(100) NOT NULL,
+    days INT NOT NULL,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- Create the performances table
+CREATE TABLE performances (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    team_name VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    house_number VARCHAR(50) NOT NULL,
+    lane VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    pincode VARCHAR(6) NOT NULL,
+    team_size INT DEFAULT 1,
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- Table for business ideas
+CREATE TABLE business_ideas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    house_number VARCHAR(50) NOT NULL,
+    lane VARCHAR(100) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    pincode VARCHAR(6) NOT NULL,
+    business_idea TEXT NOT NULL,
+    document_path VARCHAR(255),
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
