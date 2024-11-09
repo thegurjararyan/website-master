@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Free Pass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FF6B6B, #FFE66D);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .form-input {
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+        }
+
+        .form-input:focus {
+            transform: scale(1.01);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+            outline: none;
+        }
+
+        .submit-btn {
+            background-color: #ed1f24;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .error-message {
+            color: #FF6B6B;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.visible {
+            opacity: 1;
+        }
+
+        .membership-card {
+            width: 100%;
+            max-width: 600px !important;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #fff5f5, #ffffff);
+            border: 2px solid #ed1f24;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(237, 31, 36, 0.15);
+            padding: 2rem;
+            margin: 2rem auto;
+            position: relative;
+            display: none;
+            overflow: hidden;
+        }
+
+        .membership-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../assets/logo.png') center/200px no-repeat;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ed1f24;
+            padding-bottom: 1rem;
+        }
+
+        .event-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ed1f24;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .event-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .card-content {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo-container img {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            border: 2px solid #ed1f24;
+            padding: 0.5rem;
+        }
+
+        .pass-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .pass-details p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #333;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .pass-number {
+            color: #ed1f24;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .valid-until {
+            background: #ed1f24;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            grid-column: span 2;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(45deg, #FF8E53, #FF6B6B);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .membership-card {
+                padding: 1rem;
+            }
+
+            .card-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .event-title {
+                font-size: 1.5rem;
+            }
+
+            .event-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+    <div class="container">
+        <div class="card p-6">
+            <h2 class="text-3xl font-bold text-[#ed1f24] mb-4">Get Your Free Pass</h2>
+            <form id="freePassForm" action="process_free_pass.php" method="POST" class="space-y-4" autocomplete="off"
+                novalidate>
+                <input type="hidden" name="formType" value="freePassForm">
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Full Name *</label>
+                    <input type="text" required name="name" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Name is required</span>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Contact Number *</label>
+                    <input type="tel" required pattern="[0-9]{10}" name="contact" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Valid contact number required</span>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Email Address *</label>
+                    <input type="email" required name="email" class="form-input mt-1 block w-full" />
+                    <span class="error-message">Valid email required</span>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-semibold text-sm">Address Details *</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <input type="text" required name="houseNumber" placeholder="House Number"
+                                class="form-input mt-1 block w-full" />
+                            <span class="error-message">House number is required</span>
+                        </div>
+                        <div>
+                            <input type="text" required name="lane" placeholder="Street/Lane"
+                                class="form-input mt-1 block w-full" />
+                            <span class="error-message">Street/Lane is required</span>
+                        </div>
+                        <div>
+                            <input type="text" required name="city" placeholder="City"
+                                class="form-input mt-1 block w-full" />
+                            <span class="error-message">City is required</span>
+                        </div>
+                        <div>
+                            <select required name="state" class="form-input mt-1 block w-full">
+                                <option value="">Select State</option>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="West Bengal">West Bengal</option>
+                            </select>
+                            <span class="error-message">Please select a state</span>
+                        </div>
+                        <div>
+                            <input type="text" required name="pincode" pattern="[0-9]{6}" placeholder="Pincode"
+                                class="form-input mt-1 block w-full" />
+                            <span class="error-message">Valid 6-digit pincode required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="submit-btn w-full py-3 rounded-lg text-white text-lg font-semibold hover:shadow-xl">
+                        Get Free Pass
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="membership-card" id="membershipCard">
+            <div class="card-header">
+                <h2 class="event-title">Gurjar Mahotsav 2024</h2>
+                <p class="event-subtitle">Free Entry Pass</p>
+            </div>
+            <div class="card-content">
+                <div class="logo-container">
+                    <img src="../assets/logo.png" alt="Trust Logo">
+                </div>
+                <div class="pass-details">
+                    <p class="pass-number" id="cardPassId"></p>
+                    <p id="cardName"></p>
+                    <p id="cardContact"></p>
+                    <p id="cardEmail"></p>
+                    <p id="cardValidUntil" class="valid-until"></p>
+                </div>
+            </div>
+            <a href="#" id="downloadBtn" class="download-btn">Download Pass</a>
+        </div>
+
+        <div id="toast" class="fixed bottom-5 right-5 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 opacity-0 translate-y-full">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('freePassForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const form = this;
+            const inputs = form.elements;
+            let isValid = true;
+
+            inputs.forEach(input => {
+                const errorMessage = form.querySelector(`span.error-message[for="${input.name}"]`);
+
+                if (input.value.trim() === '') {
+                    errorMessage.classList.add('visible');
+                    isValid = false;
+                } else {
+                    errorMessage.classList.remove('visible');
+                }
+
+                // Specific validations
+                if (input.type === 'tel' && !/^[0-9]{10}$/.test(input.value)) {
+                    errorMessage.classList.add('visible');
+                    isValid = false;
+                }
+                if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+                    errorMessage.classList.add('visible');
+                    isValid = false;
+                }
+                if (input.name === 'pincode' && !/^[0-9]{6}$/.test(input.value)) {
+                    errorMessage.classList.add('visible');
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                showToast('Please fill all required fields correctly', 'error');
+                return;
+            }
+
+            const formData = new FormData(this);
+
+            fetch('process_free_pass.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update pass card
+                        document.getElementById('cardPassId').textContent = `Pass ID: ${data.data.passId}`;
+                        document.getElementById('cardName').textContent = `Name: ${data.data.name}`;
+                        document.getElementById('cardContact').textContent = `Contact: ${data.data.contact}`;
+                        document.getElementById('cardEmail').textContent = `Email: ${data.data.email}`;
+                        document.getElementById('cardValidUntil').textContent = `Valid Until: ${data.data.validUntil}`;
+
+                        // Show pass card and scroll to it
+                        const card = document.getElementById('membershipCard');
+                        card.style.display = 'grid';
+                        card.scrollIntoView({ behavior: 'smooth' });
+
+                        // Show success toast
+                        showToast(data.message, 'success');
+
+                        // Reset form
+                        this.reset();
+
+                    } else {
+                        showToast(data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    showToast('An error occurred. Please try again.', 'error');
+                    console.error('Error:', error);
+                });
+        });
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+
+            // Set toast styles based on type
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+            toast.className = `fixed bottom-5 right-5 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 ${bgColor} text-white z-50`;
+
+            toastMessage.textContent = message;
+
+            // Reset any existing transitions
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(100%)';
+
+            // Force reflow
+            void toast.offsetWidth;
+
+            // Show toast
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(100%)';
+            }, 3000);
+        }
+
+        document.getElementById('downloadBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const card = document.getElementById('membershipCard');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            // Hide download button for screenshot
+            downloadBtn.style.display = 'none';
+
+            html2canvas(card, {
+                scale: 2, // Better resolution
+                useCORS: true, // Handle cross-origin images
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                // Create download link
+                const link = document.createElement('a');
+                link.download = 'GACT-Free-Pass.png';
+                link.href = canvas.toDataURL('image/png');
+
+                // Show download button again
+                downloadBtn.style.display = 'block';
+
+                // Trigger download
+                link.click();
+            }).catch(err => {
+                // Show download button again in case of error
+                downloadBtn.style.display = 'block';
+                console.error('Error generating image:', err);
+                showToast('Error generating image. Please try again.', 'error');
+            });
+        });
+    </script>
+</body>
+
+</html>

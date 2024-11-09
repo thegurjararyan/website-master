@@ -5,8 +5,8 @@ header('Content-Type: application/json');
 $db_config = [
     'host' => 'localhost',
     'dbname' => 'forms_db',
-    'username' => 'Arnish',
-    'password' => 'ArnishGACT'
+    'username' => 'root',
+    'password' => ''
 ];
 
 try {
@@ -71,6 +71,9 @@ try {
         $stmt->execute([$passId]);
     } while ($stmt->fetchColumn() > 0);
 
+    // Prepare address
+    $address = implode(', ', [$houseNumber, $lane, $city, $state, $pincode]);
+
     // Set validity date
     $validUntil = '2024-12-25';
 
@@ -81,9 +84,9 @@ try {
         // Insert into database
         $stmt = $pdo->prepare("
             INSERT INTO free_passes (
-                pass_id, name, email, contact, house_number, lane, city, state, pincode, created_at, valid_until
+                pass_id, name, email, contact, address, created_at, valid_until
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?
+                ?, ?, ?, ?, ?, NOW(), ?
             )
         ");
 
@@ -92,11 +95,7 @@ try {
             $name,
             $email,
             $contact,
-            $houseNumber,
-            $lane,
-            $city,
-            $state,
-            $pincode,
+            $address,
             $validUntil
         ]);
 

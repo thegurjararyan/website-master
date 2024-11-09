@@ -1,12 +1,16 @@
 <?php
 header('Content-Type: application/json');
 
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // Database configuration
 $db_config = [
     'host' => 'localhost',
     'dbname' => 'forms_db',
-    'username' => 'Arnish',
-    'password' => 'ArnishGACT'
+    'username' => 'root',
+    'password' => ''
 ];
 
 try {
@@ -17,25 +21,29 @@ try {
         $db_config['password'],
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::attr_default_fetch_mode => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false
         ]
     );
 
     // Validate request method and form type
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['formType']) || $_POST['formType'] !== 'freePassForm') {
-        throw new Exception('Invalid request');
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception('Invalid request method');
+    }
+
+    if (!isset($_POST['formType']) || $_POST['formType'] !== 'freePassForm') {
+        throw new Exception('Invalid form submission');
     }
 
     // Sanitize and validate inputs
-    $name = htmlspecialchars(trim($_POST['name'] ?? ''));
-    $contact = htmlspecialchars(trim($_POST['contact'] ?? ''));
+    $name = filter_var(trim($_POST['name'] ?? ''), FILTER_SANITIZE_STRING);
+    $contact = filter_var(trim($_POST['contact'] ?? ''), FILTER_SANITIZE_STRING);
     $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
-    $houseNumber = htmlspecialchars(trim($_POST['houseNumber'] ?? ''));
-    $lane = htmlspecialchars(trim($_POST['lane'] ?? ''));
-    $city = htmlspecialchars(trim($_POST['city'] ?? ''));
-    $state = htmlspecialchars(trim($_POST['state'] ?? ''));
-    $pincode = htmlspecialchars(trim($_POST['pincode'] ?? ''));
+    $houseNumber = filter_var(trim($_POST['houseNumber'] ?? ''), FILTER_SANITIZE_STRING);
+    $lane = filter_var(trim($_POST['lane'] ?? ''), FILTER_SANITIZE_STRING);
+    $city = filter_var(trim($_POST['city'] ?? ''), FILTER_SANITIZE_STRING);
+    $state = filter_var(trim($_POST['state'] ?? ''), FILTER_SANITIZE_STRING);
+    $pincode = filter_var(trim($_POST['pincode'] ?? ''), FILTER_SANITIZE_STRING);
 
     // Validate required fields
     if (!$name || !$contact || !$email || !$houseNumber || !$lane || !$city || !$state || !$pincode) {
@@ -71,8 +79,17 @@ try {
         $stmt->execute([$passId]);
     } while ($stmt->fetchColumn() > 0);
 
-    // Set validity date
-    $validUntil = '2024-12-25';
+    // Prepare address
+    $address = implode(', ', [
+        $houseNumber,
+        $lane,
+        $city,
+        $state,
+        $pincode
+    ]);
+
+    // Set validity (end of current year)
+    $validUntil = date('Y-12-31');
 
     // Begin transaction
     $pdo->beginTransaction();
@@ -81,9 +98,9 @@ try {
         // Insert into database
         $stmt = $pdo->prepare("
             INSERT INTO free_passes (
-                pass_id, name, email, contact, house_number, lane, city, state, pincode, created_at, valid_until
+                pass_id, name, email, contact, address, created_at, valid_until
             ) VALUES (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?
+                ?, ?, ?, ?, ?, NOW(), ?
             )
         ");
 
@@ -92,11 +109,7 @@ try {
             $name,
             $email,
             $contact,
-            $houseNumber,
-            $lane,
-            $city,
-            $state,
-            $pincode,
+            $address,
             $validUntil
         ]);
 
@@ -123,6 +136,9 @@ try {
     }
 
 } catch (Exception $e) {
+    // Log error (in production, use proper logging)
+    error_log("Free Pass Error: " . $e->getMessage());
+    
     // Return error response
     http_response_code(400);
     echo json_encode([

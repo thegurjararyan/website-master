@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="icon" type="image/png" href="../assets/logo.png">
 
     <style>
@@ -87,137 +86,149 @@
 
         .membership-card {
             width: 100%;
-            max-width: 800px;
+            max-width: 600px !important;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #fff5f5, #ffffff);
+            border: 2px solid #ed1f24;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(237, 31, 36, 0.15);
+            padding: 2rem;
             margin: 2rem auto;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
             display: none;
             overflow: hidden;
-            position: relative;
         }
 
-        .pass-content {
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
+        .membership-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../assets/logo.png') center/200px no-repeat;
+            opacity: 0.05;
+            pointer-events: none;
         }
 
-        .pass-header {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            padding-bottom: 1.5rem;
+        .card-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
             border-bottom: 2px solid #ed1f24;
-            margin-bottom: 2rem;
+            padding-bottom: 1rem;
         }
 
-        .pass-logo {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-        }
-
-        .pass-title h2 {
+        .event-title {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 800;
             color: #ed1f24;
+            text-transform: uppercase;
             margin: 0;
         }
 
-        .pass-title p {
+        .event-subtitle {
             font-size: 1.2rem;
             color: #666;
-            margin: 0.5rem 0 0;
+            margin-top: 0.5rem;
+        }
+
+        .card-content {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo-container img {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            border: 2px solid #ed1f24;
+            padding: 0.5rem;
         }
 
         .pass-details {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.75rem;
         }
 
-        .detail-row {
-            display: flex;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            align-items: center;
+        .pass-details p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #333;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
         }
 
-        .detail-label {
-            font-weight: 600;
-            color: #495057;
-            width: 120px;
-            flex-shrink: 0;
+        .pass-number {
+            color: #ed1f24;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
         }
 
-        .detail-value {
-            color: #212529;
-            flex-grow: 1;
-        }
-
-        .pass-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2rem;
-        }
-
-        .validity {
+        .valid-until {
             background: #ed1f24;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 1rem;
             font-weight: 600;
-        }
-
-        .qr-code {
-            background: white;
-            padding: 0.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(45deg, #ed1f24, #ff4b4b);
-            color: white;
-            padding: 1rem 2rem;
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: #fff;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            margin: 1rem 0;
-            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            grid-column: span 2;
         }
 
         .download-btn:hover {
+            background: linear-gradient(45deg, #FF8E53, #FF6B6B);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(237, 31, 36, 0.3);
-        }
-
-        .download-btn svg {
-            width: 20px;
-            height: 20px;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
         }
 
         @media (max-width: 768px) {
-            .download-btn {
-                width: 90%;
+            .card {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .membership-card {
+                padding: 1rem;
+            }
+
+            .card-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .event-title {
+                font-size: 1.5rem;
+            }
+
+            .event-subtitle {
                 font-size: 1rem;
             }
-        }
-
-        .download-wrapper {
-            width: 100%;
-            max-width: 800px;
-            margin: 2rem auto;
-            text-align: center;
-            display: none; /* Initially hidden */
         }
     </style>
 </head>
@@ -226,7 +237,8 @@
     <div class="container">
         <div class="card p-6">
             <h2 class="text-3xl font-bold text-[#ed1f24] mb-4">Get Your Free Pass</h2>
-            <form id="freePassForm" action="process_free_pass.php" method="POST" class="space-y-4" autocomplete="off" novalidate>
+            <form id="freePassForm" action="process_free_pass.php" method="POST" class="space-y-4" autocomplete="off"
+                novalidate>
                 <input type="hidden" name="formType" value="freePassForm">
 
                 <div>
@@ -251,15 +263,18 @@
                     <label class="block text-gray-700 font-semibold text-sm">Address Details *</label>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <input type="text" required name="houseNumber" placeholder="House Number" class="form-input mt-1 block w-full" />
+                            <input type="text" required name="houseNumber" placeholder="House Number"
+                                class="form-input mt-1 block w-full" />
                             <span class="error-message">House number is required</span>
                         </div>
                         <div>
-                            <input type="text" required name="lane" placeholder="Street/Lane" class="form-input mt-1 block w-full" />
+                            <input type="text" required name="lane" placeholder="Street/Lane"
+                                class="form-input mt-1 block w-full" />
                             <span class="error-message">Street/Lane is required</span>
                         </div>
                         <div>
-                            <input type="text" required name="city" placeholder="City" class="form-input mt-1 block w-full" />
+                            <input type="text" required name="city" placeholder="City"
+                                class="form-input mt-1 block w-full" />
                             <span class="error-message">City is required</span>
                         </div>
                         <div>
@@ -297,63 +312,39 @@
                             <span class="error-message">Please select a state</span>
                         </div>
                         <div>
-                            <input type="text" required name="pincode" pattern="[0-9]{6}" placeholder="Pincode" class="form-input mt-1 block w-full" />
+                            <input type="text" required name="pincode" pattern="[0-9]{6}" placeholder="Pincode"
+                                class="form-input mt-1 block w-full" />
                             <span class="error-message">Valid 6-digit pincode required</span>
                         </div>
                     </div>
                 </div>
 
-                <button type="submit" class="submit-btn w-full py-3 rounded-lg text-white text-lg font-semibold hover:shadow-xl">
-                    Get Free Pass
-                </button>
+                <div>
+                    <button type="submit" class="submit-btn w-full py-3 rounded-lg text-white text-lg font-semibold hover:shadow-xl">
+                        Get Free Pass
+                    </button>
+                </div>
             </form>
         </div>
 
         <div class="membership-card" id="membershipCard">
-            <div class="pass-content">
-                <div class="pass-header">
-                    <img src="../logo.png" alt="Logo" class="pass-logo">
-                    <div class="pass-title">
-                        <h2>Gurjar Mahotsav 2024</h2>
-                        <p>Official Entry Pass</p>
-                    </div>
+            <div class="card-header">
+                <h2 class="event-title">Gurjar Mahotsav 2024</h2>
+                <p class="event-subtitle">Free Entry Pass</p>
+            </div>
+            <div class="card-content">
+                <div class="logo-container">
+                    <img src="../assets/logo.png" alt="Trust Logo">
                 </div>
-                
                 <div class="pass-details">
-                    <div class="detail-row">
-                        <span class="detail-label">Pass ID:</span>
-                        <span class="detail-value" id="cardPassId"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Name:</span>
-                        <span class="detail-value" id="cardName"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Contact:</span>
-                        <span class="detail-value" id="cardContact"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Email:</span>
-                        <span class="detail-value" id="cardEmail"></span>
-                    </div>
-                </div>
-                
-                <div class="pass-footer">
-                    <div class="validity" id="cardValidUntil"></div>
-                    <div class="qr-code" id="passQRCode"></div>
+                    <p class="pass-number" id="cardPassId"></p>
+                    <p id="cardName"></p>
+                    <p id="cardContact"></p>
+                    <p id="cardEmail"></p>
+                    <p id="cardValidUntil" class="valid-until"></p>
                 </div>
             </div>
-        </div>
-
-        <div class="download-wrapper" style="text-align: center; margin-top: 2rem;">
-            <button id="downloadBtn" class="download-btn" onclick="downloadPass(event)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                </svg>
-                Download Pass
-            </button>
+            <a href="#" id="downloadBtn" class="download-btn">Download Pass</a>
         </div>
 
         <div id="toast" class="fixed bottom-5 right-5 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 opacity-0 translate-y-full">
@@ -380,7 +371,27 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    handleFormSuccess(data.data);
+                    // Update pass card
+                    document.getElementById('cardPassId').textContent = `Pass ID: ${data.data.passId}`;
+                    document.getElementById('cardName').textContent = `Name: ${data.data.name}`;
+                    document.getElementById('cardContact').textContent = `Contact: ${data.data.contact}`;
+                    document.getElementById('cardEmail').textContent = `Email: ${data.data.email}`;
+                    document.getElementById('cardValidUntil').textContent = `Valid Until: ${data.data.validUntil}`;
+
+                    // Show pass card
+                    const card = document.getElementById('membershipCard');
+                    card.style.display = 'block';
+                    
+                    // Smooth scroll to card
+                    setTimeout(() => {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+
+                    // Show success toast
+                    showToast('Pass generated successfully! You can download it now.', 'success');
+                    
+                    // Reset form
+                    this.reset();
                 } else {
                     showToast(data.message || 'An error occurred while generating the pass.', 'error');
                 }
@@ -396,104 +407,65 @@
             });
         });
 
-        function handleFormSuccess(data) {
-            // Update pass details
-            document.getElementById('cardPassId').textContent = data.passId;
-            document.getElementById('cardName').textContent = data.name;
-            document.getElementById('cardContact').textContent = data.contact;
-            document.getElementById('cardEmail').textContent = data.email;
-            document.getElementById('cardValidUntil').textContent = 'Valid Until: ' + data.validUntil;
-
-            // Generate QR Code
-            generateQRCode(data.passId);
-
-            // Show pass card and download button
-            document.getElementById('membershipCard').style.display = 'block';
-            document.querySelector('.download-wrapper').style.display = 'block';
-
-            // Scroll to pass card
-            document.getElementById('membershipCard').scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-
-        function generateQRCode(passId) {
-            const qrContainer = document.getElementById('passQRCode');
-            qrContainer.innerHTML = '';
-            
-            new QRCode(qrContainer, {
-                text: passId,
-                width: 100,
-                height: 100,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        }
-
-        function downloadPass(event) {
-            event.preventDefault();
-            const passCard = document.getElementById('membershipCard');
-            const downloadBtn = document.getElementById('downloadBtn');
-            
-            // Hide download button temporarily
-            downloadBtn.style.display = 'none';
-            
-            html2canvas(passCard, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: '#ffffff',
-                logging: false
-            }).then(canvas => {
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'landscape',
-                    unit: 'mm',
-                    format: 'a4'
-                });
-                
-                const imgData = canvas.toDataURL('image/png');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = canvas.width;
-                const imgHeight = canvas.height;
-                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-                
-                const imgX = (pdfWidth - imgWidth * ratio) / 2;
-                const imgY = (pdfHeight - imgHeight * ratio) / 2;
-                
-                pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                pdf.save('GACT-Free-Pass.pdf');
-                
-                // Show download button again
-                downloadBtn.style.display = 'inline-flex';
-                showToast('Pass downloaded successfully!', 'success');
-            }).catch(error => {
-                console.error('Download error:', error);
-                showToast('Error generating PDF. Please try again.', 'error');
-                downloadBtn.style.display = 'inline-flex';
-            });
-        }
-
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const toastMessage = document.getElementById('toastMessage');
-            
-            toast.className = `fixed bottom-5 right-5 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 ${
-                type === 'success' ? 'bg-green-500' : 'bg-red-500'
-            } text-white`;
-            
+
+            // Remove any existing classes
+            toast.className = 'fixed bottom-5 right-5 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500';
+
+            // Add appropriate styling based on type
+            if (type === 'success') {
+                toast.classList.add('bg-green-500', 'text-white');
+            } else {
+                toast.classList.add('bg-red-500', 'text-white');
+            }
+
             toastMessage.textContent = message;
-            
+
+            // Show toast
             toast.style.opacity = '1';
             toast.style.transform = 'translateY(0)';
-            
+
+            // Hide toast after 5 seconds
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transform = 'translateY(100%)';
             }, 5000);
         }
+
+        document.getElementById('downloadBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const card = document.getElementById('membershipCard');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            // Hide download button for screenshot
+            downloadBtn.style.display = 'none';
+
+            html2canvas(card, {
+                scale: 2, // Better resolution
+                useCORS: true, // Handle cross-origin images
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                // Create download link
+                const link = document.createElement('a');
+                link.download = 'GACT-Free-Pass.png';
+                link.href = canvas.toDataURL('image/png');
+
+                // Show download button again
+                downloadBtn.style.display = 'block';
+
+                // Trigger download
+                link.click();
+            }).catch(err => {
+                // Show download button again in case of error
+                downloadBtn.style.display = 'block';
+                console.error('Error generating image:', err);
+                showToast('Error generating image. Please try again.', 'error');
+            });
+        });
     </script>
 </body>
 

@@ -380,7 +380,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    handleFormSuccess(data.data);
+                    handleFormSuccess(data);
                 } else {
                     showToast(data.message || 'An error occurred while generating the pass.', 'error');
                 }
@@ -402,7 +402,7 @@
             document.getElementById('cardName').textContent = data.name;
             document.getElementById('cardContact').textContent = data.contact;
             document.getElementById('cardEmail').textContent = data.email;
-            document.getElementById('cardValidUntil').textContent = 'Valid Until: ' + data.validUntil;
+            document.getElementById('cardValidUntil').textContent = 'Valid Until: 25 Dec 2024'; // Updated validity
 
             // Generate QR Code
             generateQRCode(data.passId);
