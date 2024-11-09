@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="icon" type="image/png" href="../assets/logo.png">
 
     <style>
@@ -261,7 +262,7 @@
     <div class="container">
         <div class="card p-6">
             <h2 class="text-3xl font-bold text-[#ed1f24] mb-4">Get Your Free Pass</h2>
-            <form id="freePassForm" action="process_pass_form.php" method="POST" class="space-y-4" autocomplete="off" novalidate>
+            <form id="freePassForm" action="process_free_pass.php" method="POST" class="space-y-4" autocomplete="off" novalidate>
                 <input type="hidden" name="formType" value="freePassForm">
 
                 <div>
@@ -350,7 +351,7 @@
                     <img src="../assets/logo.png" alt="Logo" class="pass-logo">
                     <div class="pass-title">
                         <h2>Gurjar Mahotsav 2024</h2>
-                        <p>Official Entry Pass (Valid for 1 person only)</p>
+                        <p>Official Entry Pass</p>
                     </div>
                 </div>
                 
@@ -438,6 +439,9 @@
             document.getElementById('cardEmail').textContent = data.email;
             document.getElementById('cardValidUntil').textContent = 'Valid Until: ' + data.validUntil;
 
+            // Generate QR Code
+            generateQRCode(data.passId);
+
             // Show pass card and download button
             document.getElementById('membershipCard').style.display = 'block';
             document.querySelector('.download-wrapper').style.display = 'block';
@@ -446,6 +450,20 @@
             document.getElementById('membershipCard').scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
+            });
+        }
+
+        function generateQRCode(passId) {
+            const qrContainer = document.getElementById('passQRCode');
+            qrContainer.innerHTML = '';
+            
+            new QRCode(qrContainer, {
+                text: passId,
+                width: 100,
+                height: 100,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
             });
         }
 
