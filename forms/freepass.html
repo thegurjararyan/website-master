@@ -353,39 +353,11 @@
             </form>
         </div>
 
+        <canvas id="passCanvas" style="display: none;"></canvas>
+        <img id="passTemplate" src="a.png" style="display: none;" crossorigin="anonymous">
+
         <div class="membership-card" id="membershipCard">
-            <div class="pass-content">
-                <div class="pass-header">
-                    <img src="../assets/logo.png" alt="Logo" class="pass-logo">
-                    <div class="pass-title">
-                        <h2>Gurjar Mahotsav 2024</h2>
-                        <p>Official Entry Pass (Valid for 1 person only)</p>
-                    </div>
-                </div>
-                
-                <div class="pass-details">
-                    <div class="detail-row">
-                        <span class="detail-label">Pass ID:</span>
-                        <span class="detail-value" id="cardPassId"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Name:</span>
-                        <span class="detail-value" id="cardName"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Contact:</span>
-                        <span class="detail-value" id="cardContact"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Email:</span>
-                        <span class="detail-value" id="cardEmail"></span>
-                    </div>
-                </div>
-                
-                <div class="pass-footer">
-                    <div class="validity" id="cardValidUntil"></div>
-                </div>
-            </div>
+            <img id="generatedPass" alt="Generated Pass" style="width: 100%; height: auto;">
         </div>
 
         <div class="download-wrapper" style="text-align: center; margin-top: 2rem;">
@@ -405,6 +377,10 @@
     </div>
 
     <script>
+        const canvas = document.getElementById('passCanvas');
+        const ctx = canvas.getContext('2d');
+        const templateImage = document.getElementById('passTemplate');
+
         document.getElementById('freePassForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -440,13 +416,10 @@
         });
 
         function handleFormSuccess(data) {
-            // Update pass details
-            document.getElementById('cardPassId').textContent = data.passId;
-            document.getElementById('cardName').textContent = data.name;
-            document.getElementById('cardContact').textContent = data.contact;
-            document.getElementById('cardEmail').textContent = data.email;
-            document.getElementById('cardValidUntil').textContent = 'Valid Until: ' + data.validUntil;
-
+            // Display the generated pass
+            const generatedPassImg = document.getElementById('generatedPass');
+            generatedPassImg.src = data.passImage;
+            
             // Show pass card and download button
             document.getElementById('membershipCard').style.display = 'block';
             document.querySelector('.download-wrapper').style.display = 'block';
@@ -460,46 +433,35 @@
 
         function downloadPass(event) {
             event.preventDefault();
-            const passCard = document.getElementById('membershipCard');
+            const generatedPassImg = document.getElementById('generatedPass');
             const downloadBtn = document.getElementById('downloadBtn');
             
             // Hide download button temporarily
             downloadBtn.style.display = 'none';
             
-            html2canvas(passCard, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: '#ffffff',
-                logging: false
-            }).then(canvas => {
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'landscape',
-                    unit: 'mm',
-                    format: 'a4'
-                });
-                
-                const imgData = canvas.toDataURL('image/png');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = canvas.width;
-                const imgHeight = canvas.height;
-                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-                
-                const imgX = (pdfWidth - imgWidth * ratio) / 2;
-                const imgY = (pdfHeight - imgHeight * ratio) / 2;
-                
-                pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                pdf.save('GACT-Free-Pass.pdf');
-                
-                // Show download button again
-                downloadBtn.style.display = 'inline-flex';
-                showToast('Pass downloaded successfully!', 'success');
-            }).catch(error => {
-                console.error('Download error:', error);
-                showToast('Error generating PDF. Please try again.', 'error');
-                downloadBtn.style.display = 'inline-flex';
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'landscape',
+                unit: 'mm',
+                format: 'a4'
             });
+            
+            const imgData = generatedPassImg.src;
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const imgWidth = generatedPassImg.naturalWidth;
+            const imgHeight = generatedPassImg.naturalHeight;
+            const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+            
+            const imgX = (pdfWidth - imgWidth * ratio) / 2;
+            const imgY = (pdfHeight - imgHeight * ratio) / 2;
+            
+            pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+            pdf.save('GACT-Free-Pass.pdf');
+            
+            // Show download button again
+            downloadBtn.style.display = 'inline-flex';
+            showToast('Pass downloaded successfully!', 'success');
         }
 
         function showToast(message, type = 'success') {
@@ -520,6 +482,11 @@
                 toast.style.transform = 'translateY(100%)';
             }, 5000);
         }
+
+        templateImage.onerror = function() {
+            console.error('Error loading pass template');
+            showToast('Error loading pass template. Please try again later.', 'error');
+        };
     </script>
 </body>
 

@@ -49,13 +49,18 @@ CREATE TABLE free_passes (
     pass_id VARCHAR(20) UNIQUE NOT NULL,
     full_name VARCHAR(255) NOT NULL,
     contact_number VARCHAR(15) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     house_number VARCHAR(50) NOT NULL,
     lane VARCHAR(255) NOT NULL,
     city VARCHAR(100) NOT NULL,
     state VARCHAR(100) NOT NULL,
     pincode VARCHAR(6) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    valid_until DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_pass_id (pass_id),
+    INDEX idx_email (email),
+    INDEX idx_contact (contact_number)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create the volunteers table
 CREATE TABLE volunteers (
