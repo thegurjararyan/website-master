@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link rel="icon" type="image/png" href="../assets/logo.png">
 
     <style>
@@ -86,15 +87,22 @@
 
         .membership-card {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             margin: 2rem auto;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #f0f0f0, #ffffff);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             display: none;
             overflow: hidden;
             position: relative;
-            border: 2px solid #ed1f24;
+            border: 1px solid #ddd;
+            padding: 30px;
+            background-image: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 25%, transparent 25%), 
+                              linear-gradient(225deg, rgba(255, 107, 107, 0.1) 25%, transparent 25%), 
+                              linear-gradient(45deg, rgba(255, 107, 107, 0.1) 25%, transparent 25%), 
+                              linear-gradient(315deg, rgba(255, 107, 107, 0.1) 25%, #ffffff 25%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 0, 10px -10px, 0px 10px;
         }
 
         /* Add decorative elements */
@@ -121,63 +129,63 @@
         }
 
         .pass-content {
-            padding: 2.5rem;
+            padding: 2rem;
             position: relative;
             z-index: 1;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ed1f24' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .pass-header {
             display: flex;
             align-items: center;
-            gap: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid rgba(237, 31, 36, 0.3);
-            margin-bottom: 2rem;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .pass-logo {
-            width: 80px;
-            height: 80px;
+            width: 110px;
+            height: 110px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         .pass-title h2 {
             font-size: 2rem;
             font-weight: 700;
-            background: linear-gradient(45deg, #ed1f24, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ff6b6b;
             margin: 0;
         }
 
         .pass-title p {
             font-size: 0.9rem;
-            color: #666;
-            margin: 0.5rem 0 0;
+            color: #ff6b6b;
+            margin: 0.3rem 0 0;
         }
 
         .pass-details {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .detail-row {
             display: flex;
-            padding: 1rem;
-            background: rgba(248, 249, 250, 0.8);
-            border-radius: 12px;
+            padding: 0.8rem;
+            background: rgba(240, 240, 240, 0.8);
+            border-radius: 8px;
             align-items: center;
-            border: 1px solid rgba(237, 31, 36, 0.1);
+            border: 1px solid rgba(200, 200, 200, 0.5);
             transition: transform 0.2s ease;
         }
 
         .detail-row:hover {
-            transform: translateX(5px);
-            background: rgba(248, 249, 250, 0.95);
+            transform: translateX(3px);
+            background: rgba(240, 240, 240, 0.95);
         }
 
         .detail-label {
@@ -194,19 +202,27 @@
         }
 
         .pass-footer {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            margin-top: 1rem;
-        }
+    display: flex;
+    justify-content: space-between; /* Aligns items to opposite ends */
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.footer-logo {
+    width:90px; /* Adjust size as needed */
+    height: 90px; /* Adjust size as needed */
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
 
         .validity {
             background: linear-gradient(45deg, #ed1f24, #ff6b6b);
             color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(237, 31, 36, 0.2);
+            box-shadow: 0 3px 10px rgba(237, 31, 36, 0.2);
+            font-size: 1rem;
         }
 
         .download-btn {
@@ -242,7 +258,7 @@
 
             .pass-header {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
             }
 
             .pass-title h2 {
@@ -259,11 +275,14 @@
             }
 
             .pass-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-        }
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .pass-title, .validity {
+        text-align: center;
+    }
+}
 
         @media (max-width: 480px) {
             .pass-title h2 {
@@ -290,6 +309,22 @@
             margin: 2rem auto;
             text-align: center;
             display: none; /* Initially hidden */
+        }
+
+        .welcome-line {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color:#ff4b4b
+        }
+
+        .qr-code {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -393,11 +428,14 @@
         <div class="membership-card" id="membershipCard">
             <div class="pass-content">
                 <div class="pass-header">
-                    <img src="../assets/logo.png" alt="Logo" class="pass-logo">
+                    <img src="../assets/Slogo.jpg" alt="Logo" class="pass-logo">
+
                     <div class="pass-title">
                         <h2>Gurjar Mahotsav 2024</h2>
-                        <p>Official Entry Pass (Valid for 1 person only)</p>
+                        <p>Official Entry Pass (Valid for 1+1 person)</p>
                     </div>
+
+
                 </div>
                 
                 <div class="pass-details">
@@ -418,10 +456,16 @@
                         <span class="detail-value" id="cardEmail"></span>
                     </div>
                 </div>
-                
+
+                <div id="qrcode" class="qr-code"></div>
+                <div class="welcome-line">
+                    <p>गुर्जर महोत्सव 2024 में आपका स्वागत है</p>
+                </div>
                 <div class="pass-footer">
                     <div class="validity" id="cardValidUntil"></div>
+                    <img src="../assets/logo.png" alt="Second Logo" class="footer-logo">
                 </div>
+
             </div>
         </div>
 
@@ -484,6 +528,15 @@
             document.getElementById('cardEmail').textContent = data.email;
             document.getElementById('cardValidUntil').textContent = 'Valid Until: ' + data.validUntil;
 
+            // Generate QR code for the pass ID
+            const qrcodeContainer = document.getElementById('qrcode');
+            qrcodeContainer.innerHTML = ''; // Clear any existing QR code
+            new QRCode(qrcodeContainer, {
+                text: data.passId,
+                width: 100,
+                height: 100
+            });
+
             // Show pass card and download button
             document.getElementById('membershipCard').style.display = 'block';
             document.querySelector('.download-wrapper').style.display = 'block';
@@ -503,38 +556,34 @@
             // Hide download button temporarily
             downloadBtn.style.display = 'none';
             
+            // Use html2canvas to capture the pass card
             html2canvas(passCard, {
-                scale: 2,
+                scale: 2, // Increase scale for better quality
                 useCORS: true,
-                backgroundColor: '#ffffff',
+                backgroundColor: '#ffffff', // Set to null to remove background
                 logging: false
             }).then(canvas => {
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'landscape',
-                    unit: 'mm',
-                    format: 'a4'
-                });
-                
+                // Convert canvas to data URL
                 const imgData = canvas.toDataURL('image/png');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = canvas.width;
-                const imgHeight = canvas.height;
-                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
                 
-                const imgX = (pdfWidth - imgWidth * ratio) / 2;
-                const imgY = (pdfHeight - imgHeight * ratio) / 2;
+                // Create a link element to download the image
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'GACT-Free-Pass.png';
                 
-                pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                pdf.save('GACT-Free-Pass.pdf');
+                // Append link to the body and trigger click
+                document.body.appendChild(link);
+                link.click();
+                
+                // Remove link from the body
+                document.body.removeChild(link);
                 
                 // Show download button again
                 downloadBtn.style.display = 'inline-flex';
                 showToast('Pass downloaded successfully!', 'success');
             }).catch(error => {
                 console.error('Download error:', error);
-                showToast('Error generating PDF. Please try again.', 'error');
+                showToast('Error generating PNG. Please try again.', 'error');
                 downloadBtn.style.display = 'inline-flex';
             });
         }
