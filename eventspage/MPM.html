@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gurjar Art and Culture Trust Events</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --text-color: #333333;
+            --light-bg: #f9f9f9;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo { height: 50px; }
+        .title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ed1f24;
+        }
+        .nav-buttons { display: flex; gap: 1rem; }
+        .btn {
+            background-color: #ed1f24;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #e05555;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 5rem auto 2rem;
+            padding: 0 1rem;
+        }
+        .event {
+            background-color: #ffffff;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .event-info {
+            padding: 2rem;
+        }
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        .event-date, .event-location {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .event-details h3, .event-details h4 {
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .event-details ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .event-details p {
+            margin-bottom: 1rem;
+        }
+        .event-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .view-image-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .view-image-overlay { opacity: 1; }
+        .view-image-text {
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .fullview-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .fullview-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .fullview-image {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        .fullview-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #000000;
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: row; /* Change from column to row */
+                align-items: center; /* Center align items vertically */
+                justify-content: space-between; /* Space items evenly */
+                padding: 0.5rem 1rem; /* Adjust padding */
+            }
+            .logo-title {
+                flex-grow: 1; /* Allow logo-title to take available space */
+                justify-content: flex-start; /* Align logo-title to the start */
+                margin-bottom: 0; /* Remove bottom margin */
+            }
+            .title {
+                font-size: 1rem;
+            }
+            .nav-buttons {
+                flex-shrink: 0; /* Prevent nav-buttons from shrinking */
+                justify-content: flex-end; /* Align buttons to the end */
+            }
+            .btn {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.9rem;
+            }
+            .container {
+                margin-top: 7rem;
+            }
+            .event-info {
+                padding: 1rem;
+            }
+            .event-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-title">
+            <img src="https://tinypic.host/images/2024/10/25/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png" alt="Gurjar Arts and Culture Trust Logo" class="logo">
+            <span class="title">GACT Events</span>
+        </div>
+        <div class="nav-buttons">
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../index.html#news" class="btn">Back</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+
+        <div class="event-info">
+            <h2>मीडिया पर्सन मीट 2024</h2>
+            <p class="event-date"><strong>आयोजन तिथि (Event Date):</strong> 10 नवंबर 2024</p>
+            <p class="event-location"><strong>स्थान (Location):</strong> गंगाबक्स फार्म, गाँव तुगलकाबाद, नई दिल्ली</p>
+            <div class="event-details">
+                <h3>विवरण (Details):</h3>
+                <p>गुर्जर आर्ट एंड कल्चर ट्रस्ट ने आज रविवार 10 नवंबर 2024 को गंगाबक्स निवास गाँव तुग़लक़ाबाद नई दिल्ली में सभा आयोजित की गई। जिसकी अध्यक्षता श्री सूरजमल रिटायर्ड ACP दिल्ली पुलिस ने की। सभा में गुर्जर समाज से जुड़े मीडिया पर्सन को सम्मानित किया।जिनमें मुख्य रूप से कवि श्री सतीश खटाना, श्री आकाश नागर एडीटर , दी संडे पोस्ट , श्री धीरेंद्र अवाना श्री देव गुर्जर श्री बलराज दायमा , एडीटर, मूड आफ इंडिया, श्री नीरज अम्बावता श्री मनोज कुमार ( हिंदुस्तान टाइम्स) श्री PD पाबला, श्री बॉबी भाटी व विक्की भाटी , श्री नवीन अम्बावता, मोनू अम्बावता, नीरा अम्बावता श्री अंतराम खटाना श्री पवन खटाना, श्री हरेन्द्र खटाना यूट्यूबर अरुण नागर एवं टीम , श्री हरवीर खटाना , शिकारी श्री अनिल बैंसला  ( हिंद फ़ोकस ) आदि मीडिया कर्मियों को सर्टिफिकेट, पटका देकर सम्मानित किया गया।</p>
+                    <p>तथा गुर्जर आर्ट एंड कल्चर ट्रस्ट द्वारा विगत 27 अक्तूबर 2024 को फ़रीदाबाद में आयोजित गुर्जर अधिवक्ता परिचर्चा  की समीक्षा बैठक भी हुई। जिसमें उक्त कार्यक्रम के अनेकों पहलुओं पर चर्चा हुई।गुर्जर अधिवक्ता परिचर्चा कार्यक्रम के संयोजक रहे श्री ज्ञानेन्द्र अवाना रिटायर्ड IPS , DCP दिल्ली पुलिस भी उपस्थित रहे। उसके बाद कहा आगामी 23-24-25 दिसंबर को गुर्जर महोत्सव 2024 की रूपरेखा कार्य योजना पर विस्तार से चर्चा की गई।समारोह से संबंधित कई कमेटियाँ बनाने एवं व्यवस्था संबंधी ज़िम्मेदारी बाँटने पर का निर्णय लिया गया।</p>
+                    <p>सभा में सर्वश्री रामफूल भाटी  , रणवीर चंदीला , तिलकराज बैंसला, ज्ञानचंद भडाना , ओमप्रकाश बैंसला, निरंजन नागर, जीत दायमा , हरिओम बैंसला, डाक्टर विनोद बिधूडी, महेन्द्र अधाना , सतवीर सिराधना, राजवीर पीलवान , बिजेन्दर आर्या , कमल आर्या, सुरेन्द्र गुर्जर सलारपुर ,  अजय चौधरी, राहुल बिधूडी मनोज भाटी , समय सिंह कसाना, ब्रह्म सिंह पोस्टर मास्टर, मुकेश कसाना, एडवोकेट ऍम पी नागर , सुनील चंदीला, बिरजू अधाना , देवराज भडाना रणदीप चौहान, धर्मेंद्र भगत जी , रवि नागर , विजय कराहणा आदि शामिल रहे। 
+                    </p>
+
+                <h4>सम्मान (Honour):</h4>
+                <p>उपरोक्त क्रम में ही बैठक में गुर्जर समाज से जुड़े मीडिया पर्सन को भी सम्मानित किया गया, जिनमें मुख्य रूप से कवि श्री सतीश खटाना, श्री आकाश नागर (एडीटर, दी संडे पोस्ट), श्री धीरेंद्र अवाना, श्री देव गुर्जर, श्री बलराज दायमा (एडीटर, मूड आफ इंडिया), श्री नीरज अम्बावता, श्री मनोज कुमार (हिंदुस्तान टाइम्स), श्री पी.डी. पाबला, श्री बॉबी भाटी व विक्की भाटी, श्री नवीन अम्बावता, मोनू अम्बावता, नीरा अम्बावता, श्री अंतराम खटाना, श्री पवन खटाना, श्री हरेन्द्र खटाना, यूट्यूबर अरुण नागर एवं टीम, श्री हरवीर खटाना, शिकारी श्री अनिल बैंसला (हिंद फ़ोकस) आदि मीडिया कर्मियों को सर्टिफिकेट, पटका देकर सम्मानित किया गया। इसके मूल में ऐसे सदस्यों की पहचान करने का प्रयास था, जिन्होंने मीडिया के क्षेत्र में असाधारण प्रदर्शन किया है। इन्हें ट्रस्ट की ओर से सम्मानित किया जाए।</p>
+                    <p>समाज के ऐसे सदस्यों को विशेष मान्यता देने का प्लान था जिनके प्रयासों ने ट्रस्ट के अभियान को नई ऊंचाई तक पहुंचाने में योगदान दिया हो। इसमें उनके अनुभव और सफलता की कहानी को सभी के साथ साझा किया जाएगा ताकि अन्यान्य को प्रेरणा मिल सके।
+
+                <h4>गुर्जर महोत्सव 2024</h4>
+                <p>गुर्जर आर्ट एंड कल्चर ट्रस्ट के अध्यक्ष एडवोकेट दिवाकर बिधूडी गुर्जर ने बताया गुर्जर महोत्सव 2024 इस बार 20 लाख लोगों के आने की संभावना है।</p>
+                <p>गुर्जर आर्ट एंड कल्चर ट्रस्ट द्वारा विगत 27 अक्तूबर 2024 को फ़रीदाबाद में आयोजित गुर्जर अधिवक्ता परिचर्चा की समीक्षा बैठक के उपरांत आगामी 23-24-25 दिसंबर को गुर्जर महोत्सव 2024 के भावी कार्यक्रम को लेकर उसकी रूपरेखा कार्य योजना पर विस्तार से चर्चा की गई। समारोह से संबंधित कई कमेटियाँ बनाने एवं व्यवस्था संबंधी ज़िम्मेदारी बाँटने पर का निर्णय लिया गया।</p>
+                <p>और इस बार महोत्सव मै क्या नया होगा और युवा कैसे इस से लाभ उठा पाएंगे उस पर विस्तार से चर्चा हुई और कैसे गुर्जर समाज अपनी संस्कृति को एक अच्छे ढंग से पेश कर सकें उस पर कई लोगो ने अपनी राय रखी </p>
+            </div>
+        </div>
+        <div class="event-gallery">
+            <div class="gallery-item">
+                <img src="../assets/MPM1.jpg" alt="मीडिया पर्सन मीट 2024 - लोकगीत प्रस्तुति">
+                <div class="view-image-overlay">
+                    <span class="view-image-text">देखें</span>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/MPM2.jpg" alt="मीडिया पर्सन मीट 2024 - लोकनृत्य">
+                <div class="view-image-overlay">
+                    <span class="view-image-text">देखें</span>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="../assets/MPM3.jpg" alt="मीडिया पर्सन मीट 2024 - शिल्प कला प्रदर्शनी">
+                <div class="view-image-overlay">
+                    <span class="view-image-text">देखें</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fullview-overlay" id="fullviewOverlay">
+        <img src="" alt="Full view image" class="fullview-image" id="fullviewImage">
+        <div class="fullview-close" onclick="closeFullview()">&times;</div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Gurjar Art and Culture Trust. All rights reserved.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from(".navbar", {duration: 1, y: -100, opacity: 0, ease: "power3.out"});
+        
+        gsap.utils.toArray(".event").forEach((event, index) => {
+            gsap.from(event, {
+                scrollTrigger: {
+                    trigger: event,
+                    start: "top bottom-=100",
+                },
+                duration: 1,
+                opacity: 0,
+                y: 50,
+                delay: 0.2 * index,
+                ease: "power3.out"
+            });
+        });
+
+        const fullviewOverlay = document.getElementById('fullviewOverlay');
+        const fullviewImage = document.getElementById('fullviewImage');
+
+        function setupGalleryItemListeners() {
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    fullviewImage.src = this.querySelector('img').src;
+                    fullviewOverlay.classList.add('active');
+                });
+            });
+        }
+
+        function closeFullview() {
+            fullviewOverlay.classList.remove('active');
+        }
+
+        fullviewOverlay.addEventListener('click', function(e) {
+            if (e.target === this) closeFullview();
+        });
+
+        setupGalleryItemListeners();
+    </script>
+</body>
+</html>

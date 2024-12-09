@@ -1,0 +1,109 @@
+.sponsors-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+    background: white;
+}
+
+.sponsors-track {
+    display: flex;
+    animation: scroll 40s linear infinite;
+    width: fit-content;
+}
+
+.sponsor-item {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 150px;
+    margin: 0 30px;
+    transition: transform 0.3s ease;
+    -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sponsor-item:hover {
+    transform: scale(1.15);
+}
+
+.sponsor-image {
+    max-width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-50% - 15px)); /* Half width plus half of margin */
+    }
+}
+
+/* Gradient overlays */
+.sponsors-container::before,
+.sponsors-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 150px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.sponsors-container::before {
+    left: 0;
+    background: linear-gradient(to right, white, transparent);
+}
+
+.sponsors-container::after {
+    right: 0;
+    background: linear-gradient(to left, white, transparent);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sponsor-item {
+        width: 140px;
+        height: 120px;
+        margin: 0 15px;
+        padding: 8px;
+    }
+
+    .sponsors-track {
+        animation: scroll 50s linear infinite;
+        animation-play-state: running;
+    }
+
+    .sponsors-track:hover,
+    .sponsors-track:active {
+        animation-play-state: paused;
+    }
+
+    .sponsor-item:active {
+        transform: scale(1.1);
+    }
+
+    .sponsors-container::before,
+    .sponsors-container::after {
+        width: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sponsor-item {
+        width: 120px;
+        height: 100px;
+        margin: 0 10px;
+    }
+
+    .sponsor-image {
+        max-width: 90%;
+    }
+}

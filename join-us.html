@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Creative Community</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body, html {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: #f8f9fa;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 0% 0%, #FF6B6B 0%, transparent 50%),
+                radial-gradient(circle at 100% 0%, #FF6B6B 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, #FF9B9B 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, #FF9B9B 0%, transparent 50%);
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #FF6B6B, #FF9B9B);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .menu-item:hover::before {
+            opacity: 1;
+        }
+
+        .menu-item:hover .menu-text {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .menu-text {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .logo-container img {
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+    <div class="gradient-bg"></div>
+    <div class="container mx-auto px-4 py-12">
+        <div class="logo-container text-center mb-12 floating">
+            <img src="https://github.com/Aryansin1234/ImageVideo/blob/main/GURJAR-ARTS-AND-CULTUR-LOGO-RED-1.png?raw=true" 
+                 alt="Trust Logo" 
+                 class="inline-block w-32 h-32 mb-4">
+            <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF6B6B] to-[#FF9B9B]">
+                Gurjar Art and Cultural Trust
+            </h1>
+        </div>
+        
+        <div class="card p-8 max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#FF6B6B] to-[#FF9B9B]">
+                Choose Your Journey
+            </h2>
+            
+            <div class="grid gap-4">
+                <a href="forms/join-community.html" class="menu-item rounded-xl p-6 cursor-pointer">
+                    <div class="menu-text flex items-center justify-between">
+                        <span class="text-lg font-semibold">Join Our Team</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </div>
+                </a>
+                
+                <a href="forms/stall-book.html" class="menu-item rounded-xl p-6 cursor-pointer">
+                    <div class="menu-text flex items-center justify-between">
+                        <span class="text-lg font-semibold">Book a Stall</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </div>
+                </a>
+                
+                <a href="forms/freepass.html" class="menu-item rounded-xl p-6 cursor-pointer">
+                    <div class="menu-text flex items-center justify-between">
+                        <span class="text-lg font-semibold">Get Free Pass</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </div>
+                </a>
+                
+                <a href="forms/volunteering.html" class="menu-item rounded-xl p-6 cursor-pointer">
+                    <div class="menu-text flex items-center justify-between">
+                        <span class="text-lg font-semibold">Volunteer With Us</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </div>
+                </a>
+                
+                <a href="forms/stage-performance.html" class="menu-item rounded-xl p-6 cursor-pointer">
+                    <div class="menu-text flex items-center justify-between">
+                        <span class="text-lg font-semibold">Stage Performance</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </div>
+                </a>
+                <a href="forms/business-idea.html" class="menu-item rounded-xl p-6 cursor-pointer">
+                    <div class="menu-text flex items-center justify-between">
+                        <span class="text-lg font-semibold">Submit Your Business Idea</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </div>
+                </a>
+                <a href="../index.html" class="menu-item rounded-xl p-6 cursor-pointer">
+                    <div class="menu-text flex items-center justify-between">
+                        <span class="text-lg font-semibold">Home</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
