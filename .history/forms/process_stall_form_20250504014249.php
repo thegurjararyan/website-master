@@ -14,7 +14,7 @@ class Database {
         // Load database configuration from external file
         $config = require_once '../includes/config.php';
         $dbConfig = $config['database'];
-
+        
         try {
             $this->pdo = new PDO(
                 "mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']};charset={$dbConfig['charset']}",
@@ -38,54 +38,35 @@ class Database {
     }
 }
 
-class BusinessIdeaHandler {
+class StallBookingHandler {
     private PDO $pdo;
-    private string $uploadDir = '../uploads/business_docs/';
-    private const MAX_FILE_SIZE = 5242880; // 5MB in bytes
-    private const ALLOWED_TYPES = [
-        'application/pdf',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
-    private const ALLOWED_EXTENSIONS = ['pdf', 'doc', 'docx'];
 
     public function __construct(Database $db) {
         $this->pdo = $db->getPdo();
-        if (!is_dir($this->uploadDir)) {
-            mkdir($this->uploadDir, 0755, true);
-        }
     }
 
     private function validateInput(array $data): bool {
-        // Allow more flexible contact number format (up to 15 characters)
-        if (!preg_match('/^\+?[0-9]{10,15}$/', $data['contact'])) {
-            throw new InvalidArgumentException('Invalid phone number format. Please enter a valid number (10-15 digits)');
+        // Validate phone number (10 digits to match database schema)
+        if (!preg_match('/^[0-9]{10}$/', $data['contact'])) {
+            throw new InvalidArgumentException('Invalid phone number format. Must be 10 digits.');
         }
 
+        // Validate email
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException('Invalid email format');
         }
 
+        // Validate pincode
         if (!preg_match('/^[1-9][0-9]{5}$/', $data['pincode'])) {
             throw new InvalidArgumentException('Invalid pincode format');
         }
 
-        return true;
-    }
-
-    private function handleFileUpload(): ?string {
-        try {
-            // Use the secure file upload function from security.php
-            return secureFileUpload(
-                $_FILES['document'] ?? [],
-                self::ALLOWED_TYPES,
-                self::ALLOWED_EXTENSIONS,
-                self::MAX_FILE_SIZE,
-                $this->uploadDir
-            );
-        } catch (RuntimeException $e) {
-            throw new RuntimeException($e->getMessage());
+        // Validate shops required
+        if ($data['shops'] < 1 || $data['shops'] > 5) {
+            throw new InvalidArgumentException('Number of shops must be between 1 and 5');
         }
+
+        return true;
     }
 
     private function sanitizeInput(string $data): string {
@@ -93,10 +74,10 @@ class BusinessIdeaHandler {
         return sanitizeInput($data);
     }
 
-    public function processSubmission(array $postData): void {
+    public function processBooking(array $postData): void {
         try {
             // Apply rate limiting
-            checkRateLimit('business_form', 10, 3600); // 10 submissions per hour
+            checkRateLimit('stall_form', 5, 3600); // 5 submissions per hour
             
             // Verify CSRF token
             if (!isset($postData['csrf_token'])) {
@@ -105,42 +86,53 @@ class BusinessIdeaHandler {
             
             verifyCsrfToken($postData['csrf_token']);
             
-            if (!isset($postData['formType']) || $postData['formType'] !== 'businessForm') {
+            if (!isset($postData['formType']) || $postData['formType'] !== 'stallForm') {
                 throw new InvalidArgumentException('Invalid form submission');
+            }
+
+            // Handle business type (if "other" is selected)
+            $businessType = $this->sanitizeInput($postData['businessType']);
+            if ($businessType === 'Other' && isset($postData['otherBusinessType'])) {
+                $businessType = $this->sanitizeInput($postData['otherBusinessType']);
             }
 
             // Sanitize and collect form data
             $formData = [
-                'name' => $this->sanitizeInput($postData['name']),
-                'contact' => $this->sanitizeInput($postData['contact']),
+                'organization_name' => $this->sanitizeInput($postData['organizationName']),
+                'contact_person' => $this->sanitizeInput($postData['contactPerson']),
+                'contact' => $this->sanitizeInput($postData['contactNumber']),
                 'email' => $this->sanitizeInput($postData['email']),
                 'house_number' => $this->sanitizeInput($postData['houseNumber']),
                 'lane' => $this->sanitizeInput($postData['lane']),
                 'city' => $this->sanitizeInput($postData['city']),
                 'state' => $this->sanitizeInput($postData['state']),
                 'pincode' => $this->sanitizeInput($postData['pincode']),
-                'business_idea' => $this->sanitizeInput($postData['businessIdea'])
+                'business_type' => $businessType,
+                'stall_size' => $this->sanitizeInput($postData['stallSize']),
+                'uniqueness' => $this->sanitizeInput($postData['uniqueness']),
+                'special_requirements' => isset($postData['specialRequirements']) ? 
+                    $this->sanitizeInput($postData['specialRequirements']) : null
             ];
 
             // Validate the input
             $this->validateInput($formData);
 
-            // Handle file upload
-            $documentPath = $this->handleFileUpload();
-
             // Prepare and execute the SQL query
-            $sql = "INSERT INTO business_ideas (
-                full_name, contact, email, house_number, lane,
-                city, state, pincode, business_idea, document_path
+            $sql = "INSERT INTO stall_bookings (
+                organization_name, contact_person, contact_number, email, house_number, lane, 
+                city, state, pincode, business_type, stall_size, uniqueness, 
+                special_requirements
             ) VALUES (
-                :name, :contact, :email, :house_number, :lane,
-                :city, :state, :pincode, :business_idea, :document_path
+                :organization_name, :contact_person, :contact, :email, :house_number, :lane,
+                :city, :state, :pincode, :business_type, :stall_size, :uniqueness,
+                :special_requirements
             )";
 
             $stmt = $this->pdo->prepare($sql);
             
             $success = $stmt->execute([
-                ':name' => $formData['name'],
+                ':organization_name' => $formData['organization_name'],
+                ':contact_person' => $formData['contact_person'],
                 ':contact' => $formData['contact'],
                 ':email' => $formData['email'],
                 ':house_number' => $formData['house_number'],
@@ -148,19 +140,19 @@ class BusinessIdeaHandler {
                 ':city' => $formData['city'],
                 ':state' => $formData['state'],
                 ':pincode' => $formData['pincode'],
-                ':business_idea' => $formData['business_idea'],
-                ':document_path' => $documentPath
+                ':business_type' => $formData['business_type'],
+                ':stall_size' => $formData['stall_size'],
+                ':uniqueness' => $formData['uniqueness'],
+                ':special_requirements' => $formData['special_requirements']
             ]);
 
             if ($success) {
-                $this->sendResponse(true, 'Business idea submitted successfully!');
+                $this->sendResponse(true, 'Stall booking submitted successfully!');
             } else {
-                throw new Exception('Failed to save submission');
+                throw new Exception('Failed to save booking');
             }
 
         } catch (InvalidArgumentException $e) {
-            $this->sendResponse(false, $e->getMessage());
-        } catch (RuntimeException $e) {
             $this->sendResponse(false, $e->getMessage());
         } catch (Exception $e) {
             $this->sendResponse(false, 'An error occurred while processing your request');
@@ -181,7 +173,7 @@ class BusinessIdeaHandler {
 // Process the request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db = new Database();
-    $handler = new BusinessIdeaHandler($db);
-    $handler->processSubmission($_POST);
+    $handler = new StallBookingHandler($db);
+    $handler->processBooking($_POST);
 }
 ?>

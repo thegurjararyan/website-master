@@ -83,8 +83,8 @@ class VolunteerFormHandler {
             }
         }
         
-        // Validate contact number (up to 15 digits to match database schema)
-        if (!preg_match('/^[0-9]{10,15}$/', $_POST['contact'])) {
+        // Validate contact number (10 digits)
+        if (!preg_match('/^[0-9]{10}$/', $_POST['contact'])) {
             throw new Exception('Invalid contact number');
         }
         

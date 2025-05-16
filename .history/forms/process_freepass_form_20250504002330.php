@@ -9,7 +9,7 @@ setSecurityHeaders();
 
 header('Content-Type: application/json');
 
-class MembershipHandler {
+class FreePassHandler {
     private PDO $pdo;
     
     public function __construct() {
@@ -34,11 +34,12 @@ class MembershipHandler {
             );
         } catch (PDOException $e) {
             $this->sendResponse(false, 'Database connection failed', null);
+            error_log($e->getMessage());
         }
     }
     
-    private function generateMemberId(): string {
-        $prefix = 'GACT';
+    private function generatePassId(): string {
+        $prefix = 'PASS';
         $year = date('Y');
         $random = str_pad((string)mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
         return $prefix . $year . $random;
@@ -53,11 +54,11 @@ class MembershipHandler {
         verifyCsrfToken($_POST['csrf_token']);
         
         // Apply rate limiting
-        checkRateLimit('join_form', 10, 3600); // 10 submissions per hour
+        checkRateLimit('freepass_form', 5, 3600); // 5 submissions per hour
         
         $required = [
-            'name', 'contact', 'email', 'bloodGroup', 'profession',
-            'houseNumber', 'lane', 'city', 'state', 'pincode', 'interest'
+            'name', 'contact', 'email', 'ageGroup',
+            'houseNumber', 'lane', 'city', 'state', 'pincode', 'source'
         ];
         
         $data = [];
@@ -91,19 +92,19 @@ class MembershipHandler {
         return sanitizeInput($data);
     }
     
-    public function processMembership(): void {
+    public function processPass(): void {
         try {
             $data = $this->validateInput();
-            $memberId = $this->generateMemberId();
+            $passId = $this->generatePassId();
             
-            $sql = "INSERT INTO members (
-                name, contact, email, blood_group, profession,
+            $sql = "INSERT INTO free_passes (
+                name, contact, email, age_group,
                 house_number, lane, city, state, pincode,
-                interest, other_interest, member_id
+                source, pass_id
             ) VALUES (
-                :name, :contact, :email, :blood_group, :profession,
+                :name, :contact, :email, :age_group,
                 :house_number, :lane, :city, :state, :pincode,
-                :interest, :other_interest, :member_id
+                :source, :pass_id
             )";
             
             $stmt = $this->pdo->prepare($sql);
@@ -112,31 +113,32 @@ class MembershipHandler {
                 'name' => $data['name'],
                 'contact' => $data['contact'],
                 'email' => $data['email'],
-                'blood_group' => $data['bloodGroup'],
-                'profession' => $data['profession'],
+                'age_group' => $data['ageGroup'],
                 'house_number' => $data['houseNumber'],
                 'lane' => $data['lane'],
                 'city' => $data['city'],
                 'state' => $data['state'],
                 'pincode' => $data['pincode'],
-                'interest' => $data['interest'],
-                'other_interest' => $_POST['otherInterest'] ?? null,
-                'member_id' => $memberId
+                'source' => $data['source'],
+                'pass_id' => $passId
             ]);
             
-            $memberData = [
-                'memberId' => $memberId,
+            $passData = [
+                'passId' => $passId,
                 'name' => $data['name'],
                 'contact' => $data['contact'],
                 'email' => $data['email'],
-                'bloodGroup' => $data['bloodGroup'],
-                'dateJoined' => date('Y-m-d')
+                'date' => date('Y-m-d')
             ];
             
-            $this->sendResponse(true, 'Membership registration successful!', $memberData);
+            $this->sendResponse(true, 'Free pass generated successfully!', $passData);
             
         } catch (PDOException $e) {
-            $this->sendResponse(false, 'Failed to save membership data', null);
+            $this->sendResponse(false, 'Failed to save pass data', null);
+            error_log($e->getMessage());
+        } catch (Exception $e) {
+            $this->sendResponse(false, $e->getMessage(), null);
+            error_log($e->getMessage());
         }
     }
     
@@ -151,5 +153,5 @@ class MembershipHandler {
 }
 
 // Process the form
-$handler = new MembershipHandler();
-$handler->processMembership();
+$handler = new FreePassHandler();
+$handler->processPass();

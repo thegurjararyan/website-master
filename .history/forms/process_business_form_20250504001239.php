@@ -57,9 +57,8 @@ class BusinessIdeaHandler {
     }
 
     private function validateInput(array $data): bool {
-        // Allow more flexible contact number format (up to 15 characters)
-        if (!preg_match('/^\+?[0-9]{10,15}$/', $data['contact'])) {
-            throw new InvalidArgumentException('Invalid phone number format. Please enter a valid number (10-15 digits)');
+        if (!preg_match('/^[6-9]\d{9}$/', $data['contact'])) {
+            throw new InvalidArgumentException('Invalid phone number format');
         }
 
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -130,7 +129,7 @@ class BusinessIdeaHandler {
 
             // Prepare and execute the SQL query
             $sql = "INSERT INTO business_ideas (
-                full_name, contact, email, house_number, lane,
+                full_name, contact_number, email, house_number, lane,
                 city, state, pincode, business_idea, document_path
             ) VALUES (
                 :name, :contact, :email, :house_number, :lane,
